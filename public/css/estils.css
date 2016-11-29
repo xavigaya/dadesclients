@@ -1,0 +1,21 @@
+.separador:nth-child(even) {
+    border-bottom-style: double;
+}
+
+.taula {
+    font-size: 90%;
+    text-align: center;
+}
+
+th {
+    text-align: center;
+    background-color:skyblue;
+}
+
+tr:nth-child(even) {
+    background-color:#dde;
+}
+
+label input {
+    font-weight: normal;
+}
