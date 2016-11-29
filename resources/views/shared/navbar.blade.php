@@ -29,9 +29,12 @@
                         <li><a href="/rotures/create" > Afegir Rotures </a></li>
                     </ul>
                 </li>
+                <li><a href="/controlph" > Control Ph </a></li>
+                <!--
                 <li><a href="/customers" > Clients </a></li>
                 <li><a href="/publications" > Publicacions </a></li>
                 <li><a href="/people" > Contactes </a></li>
+                -->
                 <li class="dropdown" >
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" > Member <span class="caret" ></span></a>
                 <ul class="dropdown-menu" role="menu" >
