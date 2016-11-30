@@ -6,7 +6,7 @@
             <div class="panel-heading">
                 <span class="badge">
                     <a href="/controlph/create">
-                        <img src="/img/add.png" alt="Afegir" title="Afegir" height="20px"> Afegir Msura Ph
+                        <img src="/img/add.png" alt="Afegir" title="Afegir" height="20px"> Afegir Medició Ph
                     </a>
                 </span>
             </div>
