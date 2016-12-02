@@ -28,6 +28,7 @@ Route::post('/rotures/create', 'RoturesPaperController@store');
 
 // RoturesPaper
 Route::get('/controlph', 'ControlPhController@index');
+Route::get('/controlph/nevera3', 'ControlPhController@nevera3');
 Route::get('/controlph/create', 'ControlPhController@create');
 Route::post('/controlph/create', 'ControlPhController@store');
 

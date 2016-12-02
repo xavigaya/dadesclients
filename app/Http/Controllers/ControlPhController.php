@@ -15,6 +15,12 @@ class ControlPhController extends Controller
         
     }
     
+    public function nevera3(){
+        $phs = ControlPh::all()->sortByDesc('id');
+        return view('controlph.index_nev3', compact('phs'));
+        
+    }
+    
     public function create(){
         return view('controlph.create');
     }
@@ -34,5 +40,20 @@ class ControlPhController extends Controller
         ));
         $ph->save();
         return redirect('/controlph')-> with ('status', 'Medició entrada correctament!');
+    }
+    
+    /**
+     * Send an e-mail after insering.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function sendEmailphValues(Request $request) {
+        
+        Mail::send('emails.reminder', ['user' => $user], function ($m) use ($user) {
+            $m->from('hello@app.com', 'Your Application');
+
+            $m->to($user->email, $user->name)->subject('Your Reminder!');
+        });
     }
 }
