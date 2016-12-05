@@ -50,6 +50,32 @@ class RoturesPaperController extends Controller
                         'nom_bobinero' => $request->get('nombobinero')]
         );
         
+        $rotures = array(
+            'IdProducte' => $request->get('IdProducte'),
+            'nom_producte' => $request->get('name'),
+            'data' => date('Y-m-d',strtotime($request->get('data'))),
+            'hora' => date('H:i:s',strtotime($request->get('data'))),
+            'desbobinador' => $request->get('desbobinador'),
+            'bras' => $request->get('bras'),
+            'diametre_bobina' => $request->get('diametrebobina'),
+            'posicio_bras' => $request->get('posicio'),
+            'posicio_serra' => $request->get('posicio2'),
+            'rotura' => $request->get('rotura'),
+            'compensador' => $request->get('compensador'),
+            'detalleu_comportament' => $request->get('detalleu1'),
+            'detalleu_missatges_display' => $request->get('detalleu2'),
+            'conductor' => $request->get('conductor'),
+            'bobinero' => $request->get('bobinero'),
+            'responsable' => $request->get('responsable'),
+            'nom_bobinero' => $request->get('nombobinero')
+        );
+        
+        Mail::send('emails.rotures', $rotures, function ($message) {
+            $message->from('rotures@segre.com', 'Automatisme Rotures Paper');
+            $message->to('cduran@segre.com')->subject('Nova Rotura Paper');
+        });
+        
+        
         return redirect('/rotures')-> with ('status', 'La rotura del producte amb ID : '.$request->get('IdProducte').' s\'ha afegit a la BDD!');
     }
     

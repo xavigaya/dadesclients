@@ -32,9 +32,8 @@ Route::get('/controlph', 'ControlPhController@index');
 Route::get('/controlph/nevera3', 'ControlPhController@nevera3');
 Route::get('/controlph/create', 'ControlPhController@create');
 Route::post('/controlph/create', 'ControlPhController@store');
-Route::get('/controlph/show', 'ControlPhController@show');
 
-
+/**
 Route::get('sendemail', function(){
     $data = array(
         'name' => "Correu de Prova",
@@ -46,7 +45,7 @@ Route::get('sendemail', function(){
     });
     return "Email enviat correctament";
 });
-
+**/
 
 
 // Customers
