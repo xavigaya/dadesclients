@@ -3,6 +3,17 @@
 @section('content')
 
         <div class="container col-md-12 col-md-offset-0">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="badge">
+                        <a href="/rotures/create">
+                            <img src="/img/add.png" alt="Afegir" title="Afegir" height="20px"> Afegir Nova Rotura
+                        </a>
+                    </span>
+                </div>
+            </div>
+            
+            
             <div class="panel panel-default table-responsive">
                 <div class="panel-heading">
                     <h2 class="bg-warning">Rotures de Paper</h2>
