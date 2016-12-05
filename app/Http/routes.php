@@ -26,11 +26,27 @@ Route::get('/rotures', 'RoturesPaperController@index');
 Route::get('/rotures/create', 'RoturesPaperController@create');
 Route::post('/rotures/create', 'RoturesPaperController@store');
 
+
 // RoturesPaper
 Route::get('/controlph', 'ControlPhController@index');
 Route::get('/controlph/nevera3', 'ControlPhController@nevera3');
 Route::get('/controlph/create', 'ControlPhController@create');
 Route::post('/controlph/create', 'ControlPhController@store');
+Route::get('/controlph/show', 'ControlPhController@show');
+
+
+Route::get('sendemail', function(){
+    $data = array(
+        'name' => "Correu de Prova",
+    );
+    
+    Mail::send('emails.welcome', $data, function ($message){
+        $message->from('correudeprova@segre.com', 'Correu de Prova');
+        $message->to('xavigaya@gmail.com')->subject('Correu de prova');
+    });
+    return "Email enviat correctament";
+});
+
 
 
 // Customers
