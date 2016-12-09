@@ -11,13 +11,13 @@ use Charts;
 
 class ControlPhController extends Controller
 {
-    public function index2(){
+    public function index(){
         $phs = ControlPh::all()->sortByDesc('id');
 
         return view('controlph.index', compact('phs'));
     }
 
-    public function index(){
+    public function index2(){
         $phs = ControlPh::all()->sortByDesc('id');
 
         $chart = Charts::database(ControlPh::all(), 'line', 'chartjs')
@@ -27,6 +27,10 @@ class ControlPhController extends Controller
             //->dimensions(1000,500)
             ->responsive(true)
             ->dateColumn('Data');
+            /**
+            Afegir aquesta linia al index.blade.php
+            {!! $chart->render() !!}
+            **/
 
         return view('controlph.index', compact('phs'), ['chart' => $chart]);
     }

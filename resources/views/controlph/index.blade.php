@@ -19,7 +19,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h2>Mesures Ph</h2>
-                {!! $chart->render() !!}
+                
             </div>
             @if (session('status'))
                 <div class ="alert alert-success">
