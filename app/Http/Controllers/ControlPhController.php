@@ -61,7 +61,7 @@ class ControlPhController extends Controller
         
         Mail::send('emails.controlph', $maildata, function ($message) {
             $message->from('controlph@segre.com', 'Automatisme Control Ph');
-            $message->to('cduran@segre.com')->subject('Medició Ph');
+            $message->to('cduran@segre.com')->cc('alco@segre.com')->bcc('xgaya@segre.com')->subject('Medició Ph');
         });
         
                 
