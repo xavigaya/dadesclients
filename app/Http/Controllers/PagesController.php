@@ -12,5 +12,5 @@ class PagesController extends Controller
     {
         return view('home');
     }
-    
+
 }

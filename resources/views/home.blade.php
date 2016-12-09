@@ -10,8 +10,7 @@
                 <div class ="text-center">
                     <img src="img/logo_lerigraf.jpg" alt="Logo Lerigraf">
                 </div>
-                
-                <div id='calendar'></div>
+
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 @extends('master')
 @section('title', 'Històric Ph')
 @section('content')
-    <div class="container col-md-12">
+    <div class="container col-md-10 col-md-offset-1">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <span class="badge">
@@ -41,24 +41,24 @@
                             <th>Id</th>
                             <th>Data</th>
                             <th>Ph 1</th>
-                            <th>Conductivitat 1</th>
-                            <th>Temperatura 1</th>
+                            <th>Conduct. 1</th>
+                            <th>Temp. 1</th>
                             <th>Ph 2</th>
-                            <th>Conductivitat 2</th>
-                            <th>Temperatura 2</th>
+                            <th>Conduct. 2</th>
+                            <th>Temp. 2</th>
                             <th>Ph 3</th>
-                            <th>Conductivitat 3</th>
-                            <th>Temperatura 3</th>
+                            <th>Conduct. 3</th>
+                            <th>Temp. 3</th>
                             <th>Ph 0</th>
-                            <th>Conductivitat 0</th>
-                            <th>Temperatura 0</th>
+                            <th>Conduct. 0</th>
+                            <th>Temp. 0</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($phs as $ph)
                             <tr>
                                 <td>{!! $ph->id !!}</td>
-                                <td>{!! $ph->Data !!}</td>
+                                <td>{!! date('d/m/y',strtotime($ph->Data)) !!}</td>
                                 <td>{!! $ph->Ph1 !!}</td>
                                 <td>{!! $ph->Cond1 !!}</td>
                                 <td>{!! $ph->Temp1 !!}</td>
