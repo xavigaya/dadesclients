@@ -18,7 +18,12 @@
 Route::get('/', 'PagesController@home');
 
 // User
-//Route::get('/user', 'UserController@index');
+Route::get('/users/register', 'Auth\AuthController@getRegister');
+Route::post('/users/register', 'Auth\AuthController@postRegister');
+Route::get('users/logout', 'Auth\AuthController@logout');
+Route::get('users/login', 'Auth\AuthController@getLogin');
+Route::post('users/login', 'Auth\AuthController@postLogin');
+
 
 
 // RoturesPaper
@@ -38,7 +43,7 @@ Route::get('sendemail', function(){
     $data = array(
         'name' => "Correu de Prova",
     );
-    
+
     Mail::send('emails.welcome', $data, function ($message){
         $message->from('correudeprova@segre.com', 'Correu de Prova');
         $message->to('xavigaya@gmail.com')->subject('Correu de prova');
