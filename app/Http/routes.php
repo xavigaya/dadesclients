@@ -24,6 +24,16 @@ Route::get('users/logout', 'Auth\AuthController@logout');
 Route::get('users/login', 'Auth\AuthController@getLogin');
 Route::post('users/login', 'Auth\AuthController@postLogin');
 
+Route::group(array('prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth'), function () {
+  Route::get('users', 'UsersController@index');
+});
+
+//Timelogs
+Route::get('/workers', 'WorkersController@index');
+Route::get('/workers/create', 'WorkersController@create');
+
+Route::get('/teams', 'TeamsController@index');
+Route::get('/teams/create', 'TeamsController@create');
 
 
 // RoturesPaper
