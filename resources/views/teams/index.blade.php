@@ -39,19 +39,6 @@
                                 <td>
                                     {!! $team->nom !!}
                                 </td>
-                                <td >
-                                    <a href="/people/{!! $person->slug !!}/edit">
-                                        <img src="/img/edit.png" alt="Editar" title="Editar" height="20px">
-                                    </a>
-                                    <a href="/people/{!! $person->slug !!}/delete">
-                                        <img src="/img/trash.png" alt="Esborrar" title="Esborrar" height="20px">
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr class="separador">
-                                <td >&nbsp;</td>
-                                <td colspan="4"></td>
-                                <td >&nbsp;</td>
                             </tr>
                         @endforeach
                     </tbody>

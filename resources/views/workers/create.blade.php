@@ -36,7 +36,13 @@
                     <div class ="form-group">
                         <label for ="equip" class ="col-lg-2 control-label">Equip</label>
                         <div class ="col-lg-10">
-                            <input type="text" class ="form-control" id ="equip" placeholder="" name="equip">
+                          <select class="form-control" id="equip" name="equip" >
+                              @foreach($teams as $team)
+                                  <option value="{!! $team->id !!}">
+                                      {!! $team->nom !!}
+                                  </option>
+                              @endforeach
+                          </select>
                         </div>
                     </div>
                     <div class ="form-group">

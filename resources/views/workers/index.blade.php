@@ -9,11 +9,6 @@
                         <img src="/img/add.png" alt="Afegir" title="Afegir" height="20px"> Afegir Treballador
                     </a>
                 </span>
-                <span class="badge">
-                    <a href="/typeperson/create">
-                        <img src="/img/add.png" alt="Afegir" title="Afegir" height="20px"> Afegir Tipus Contacte
-                    </a>
-                </span>
             </div>
         </div>
         <div class="panel panel-default">
@@ -31,46 +26,28 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Publicació</th>
-                            <th>Nom i Cognoms</th>
-                            <th>Email</th>
-                            <th>Telèfons</th>
-                            <th>Càrrec</th>
-                            <th>Accions</th>
+                            <th>DNI</th>
+                            <th>Nom</th>
+                            <th>Cognoms</th>
+                            <th>Equip</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($workers as $worker)
                             <tr >
                                 <td>
-                                    {!! $worker->nom .' '. $worker->cognoms !!}
+                                  {!! $worker->dni !!}
                                 </td>
                                 <td>
-
+                                  {!! $worker->nom !!}
                                 </td>
                                 <td>
+                                  {!! $worker->cognoms !!}
                                 </td>
                                 <td>
-
-                                </td>
-                                <td>
-
-                                </td>
-                                <td >
-                                    <a href="/people/{!! $person->slug !!}/edit">
-                                        <img src="/img/edit.png" alt="Editar" title="Editar" height="20px">
-                                    </a>
-                                    <a href="/people/{!! $person->slug !!}/delete">
-                                        <img src="/img/trash.png" alt="Esborrar" title="Esborrar" height="20px">
-                                    </a>
+                                  {!! $worker->equip !!}
                                 </td>
                             </tr>
-                            <tr class="separador">
-                                <td >&nbsp;</td>
-                                <td colspan="4"></td>
-                                <td >&nbsp;</td>
-                            </tr>
-
                         @endforeach
                     </tbody>
                 </table>

@@ -31,9 +31,21 @@ Route::group(array('prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 
 //Timelogs
 Route::get('/workers', 'WorkersController@index');
 Route::get('/workers/create', 'WorkersController@create');
+Route::post('/workers/create', 'WorkersController@store');
 
 Route::get('/teams', 'TeamsController@index');
 Route::get('/teams/create', 'TeamsController@create');
+Route::post('/teams/create', 'TeamsController@store');
+
+Route::get('/timelogs', 'TimelogsController@index');
+Route::get('/timelogs/create', 'TimelogsController@create');
+Route::get('/timelogs/create_equip1', 'TimelogsController@create_equip1');
+Route::get('/timelogs/create_equip2', 'TimelogsController@create_equip2');
+Route::get('/timelogs/create_equip3', 'TimelogsController@create_equip3');
+Route::get('/timelogs/create_equip4', 'TimelogsController@create_equip4');
+Route::get('/timelogs/create_equip5', 'TimelogsController@create_equip5');
+Route::get('/timelogs/create_equip6', 'TimelogsController@create_equip6');
+Route::post('/timelogs/create_equip1', 'TimelogsController@store');
 
 
 // RoturesPaper

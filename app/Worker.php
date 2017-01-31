@@ -12,15 +12,14 @@ class Worker extends Model
    * @var array
    */
   protected $fillable = [
-      'nom', 'cognoms', 'dni',
+      'nom', 'cognoms', 'dni', 'equip',
   ];
 
-  /**
-   * The attributes that should be hidden for arrays.
-   *
-   * @var array
-   */
-  protected $hidden = [
-      'password', 'remember_token',
-  ];
+  public function teams() {
+      return $this->hasOne('App\Team', 'id', 'equip');
+  }
+
+  public function timelogs() {
+      return $this->hasmany('App\Timelog', 'dni', 'dni');
+  }
 }
