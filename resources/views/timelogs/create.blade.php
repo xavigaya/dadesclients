@@ -46,8 +46,8 @@
                     <table  class="table">
                       <thead>
                         <tr>
-                            <th>DNI</th>
                             <th>Nom</th>
+                            <th>DNI</th>
                             <th>Entrada</th>
                             <th>Sortida</th>
                             <th>Festa</th>
@@ -59,29 +59,25 @@
                         @foreach($workers as $worker)
                             <tr >
                               <td>
+                                  <input type="text" class ="form-control" id ="nom" value="{!! $worker->nom.' '.$worker->cognoms !!}"
+                                  name="nom" readonly>
+                              </td>
+                              <td>
                                   <input type="text" class ="form-control" id ="dni" value="{!! $worker->dni !!}" name="dni" readonly>
                               </td>
                               <td>
-                                  <input type="text" class ="form-control" id ="nom" value="{!! $worker->nom.' '.$worker->cognoms !!}" name="nom" readonly>
+                                  <input type="time" class ="form-control" id ="entrada" name="entrada" value="{!! $worker->entrada !!}">
                               </td>
                               <td>
-                                  {!! $worker->entrada !!}
-                                  <input type="time" class ="form-control" id ="entrada" name="entrada">
-                              </td>
-                              <td>
-                                  {!! $worker->sortida !!}
                                   <input type="time" class ="form-control" id ="sortida" name="sortida">
                               </td>
                               <td>
-                                  {!! $worker->festa !!}
                                   <input type="checkbox" class ="form-control" id ="festa" name="festa" value="Festa">
                               </td>
                               <td>
-                                  {!! $worker->vacances !!}
                                   <input type="checkbox" class ="form-control" id ="vacances" name="vacances" value="Vacances">
                               </td>
                               <td>
-                                  {!! $worker->baixa !!}
                                   <input type="checkbox" class ="form-control" id ="baixa" name="baixa" value="Baixa">
                               </td>
                             </tr>

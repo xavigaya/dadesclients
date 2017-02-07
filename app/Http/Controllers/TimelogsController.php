@@ -54,20 +54,46 @@ class TimelogsController extends Controller
 
 
   public function store(TimelogsFormRequest $request) {
-      $timelog = new Timelog(array(
-      $data = $request->get('data'),
-      foreach ($request->get('dni') as $value) {
-            'dni' => $value['dni'],
-            'entrada' => $value->get('entrada'),
-            'sortida' => $value->get('sortida'),
-            'festa' => $value->get('festa'),
-            'vacances' => $value->get('vacances'),
-            'baixa' => $value->get('baixa'),
-        ));
-        $timelog->save();
-      }
+    $dades = array();
 
-      return redirect('/timelogs')-> with ('status', 'El registre s\'ha afegit!<br>'.$request);
+    foreach ($request->get('dni') as $key => $value){
+      $dades[$key] = array('dni'=>$value);
+    }
+    foreach ($request->get('nom') as $key => $value){
+      $dades[$key] += array('nom'=>$value);
+    }
+    foreach ($request->get('entrada') as $key => $value){
+      $dades[$key] += array('entrada'=>$value);
+    }
+    foreach ($request->get('sortida') as $key => $value){
+      $dades[$key] += array('sortida'=>$value);
+    }
+    foreach ($request->get('festa') as $key => $value){
+      $dades[$key] += array('festa'=>$value);
+    }
+    foreach ($request->get('vacances') as $key => $value){
+      $dades[$key] += array('vacances'=>$value);
+    }
+    foreach ($request->get('baixa') as $key => $value){
+      $dades[$key] += array('baixa'=>$value);
+    }
+
+    foreach ($dades as $dada){
+      $timelog = new Timelog(array(
+          'data' => $request->get('data'),
+          'dni' => $dada['dni'],
+          'entrada' => $dada['entrada'],
+          'sortida' => $dada['sortida'],
+          'festa' => $dada['festa'],
+          'vacances' => $dada['vacances'],
+          'baixa' => $dada['baixa'],
+      ));
+      $timelog->save();
+    }
+
+
+    return redirect('/timelogs/create_equip1')-> with ('status', 'El registre s\'ha afegit!');
+    //return dump($dades);
   }
 
 
