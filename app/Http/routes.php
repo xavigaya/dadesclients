@@ -46,6 +46,11 @@ Route::get('/timelogs/create_equip4', 'TimelogsController@create_equip4');
 Route::get('/timelogs/create_equip5', 'TimelogsController@create_equip5');
 Route::get('/timelogs/create_equip6', 'TimelogsController@create_equip6');
 Route::post('/timelogs/create_equip1', 'TimelogsController@store');
+Route::post('/timelogs/create_equip2', 'TimelogsController@store');
+Route::post('/timelogs/create_equip3', 'TimelogsController@store');
+Route::post('/timelogs/create_equip4', 'TimelogsController@store');
+Route::post('/timelogs/create_equip5', 'TimelogsController@store');
+Route::post('/timelogs/create_equip6', 'TimelogsController@store');
 
 
 // RoturesPaper

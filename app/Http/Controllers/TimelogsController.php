@@ -79,6 +79,10 @@ class TimelogsController extends Controller
     }
 
     foreach ($dades as $dada){
+      if ($dada['festa'] || $dada['vacances'] || $dada['baixa']) {
+        $dada['entrada'] = null;
+        $dada['sortida'] = null;
+      }
       $timelog = new Timelog(array(
           'data' => $request->get('data'),
           'dni' => $dada['dni'],
@@ -91,9 +95,7 @@ class TimelogsController extends Controller
       $timelog->save();
     }
 
-
-    return redirect('/timelogs/create_equip1')-> with ('status', 'El registre s\'ha afegit!');
-    //return dump($dades);
+    return redirect()->back()-> with ('status', 'El registre s\'ha afegit!')->withInput();
   }
 
 

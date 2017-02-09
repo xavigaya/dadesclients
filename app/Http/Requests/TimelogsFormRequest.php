@@ -24,6 +24,8 @@ class TimelogsFormRequest extends Request
     public function rules()
     {
         return [
+          'data' => 'required',
+          'dni' => 'required',
 
         ];
     }

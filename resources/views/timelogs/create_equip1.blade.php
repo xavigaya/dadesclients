@@ -2,31 +2,7 @@
 @section('title', 'Alta Registre')
 @section('content')
     <div class ="container col-md-10 col-md-offset-1">
-      <div class="panel panel-default">
-          <div class="panel-heading">
-            <span class="badge">
-                <a href="/timelogs/create_equip1"><img src="/img/add.png" alt="Afegir" title="Afegir" height="20px"> Preimpressió</a>
-            </span>
-            <span class="badge">
-                <a href="/timelogs/create_equip2"><img src="/img/add.png" alt="Afegir" title="Afegir" height="20px"> Manteniment</a>
-            </span>
-            <span class="badge">
-                <a href="/timelogs/create_equip3"><img src="/img/add.png" alt="Afegir" title="Afegir" height="20px"> Impressió tarde</a>
-            </span>
-            <span class="badge">
-                <a href="/timelogs/create_equip4"><img src="/img/add.png" alt="Afegir" title="Afegir" height="20px"> Administració</a>
-            </span>
-            <span class="badge">
-                <a href="/timelogs/create_equip5"><img src="/img/add.png" alt="Afegir" title="Afegir" height="20px"> Impressió Nit</a>
-            </span>
-            <span class="badge">
-                <a href="/timelogs/create_equip6"><img src="/img/add.png" alt="Afegir" title="Afegir" height="20px"> Cierre</a>
-            </span>
-            <span class="badge">
-                <a href="/timelogs/create"><img src="/img/add.png" alt="Afegir" title="Afegir" height="20px"> Tots</a>
-            </span>
-          </div>
-      </div>
+      @include('timelogs.menuequips')
         <div class ="well well bs-component">
             <form class ="form-horizontal" method="post">
                 @foreach ($errors->all() as $error)
@@ -41,7 +17,8 @@
                 <fieldset>
                     <legend>Afegir un Registre</legend>
                     <!--<span class="badge"><a href="/timelogs/create">Dia Anterior</a></span>-->
-                    <span class="badge"><input type="date" class ="form-control" id ="data" name="data"></span>
+                    <span class="badge"><input type="date" class ="form-control" id ="data"
+                      name="data" value="{{ date('Y-m-d', strtotime( old('data').' + 1 days')) }}" autofocus tabindex="1"></span>
                     <!--<span class="badge"><a href="/teams/create">Dia Següent</a></span>-->
                     <table  class="table">
                       <thead>
@@ -60,35 +37,39 @@
                             <tr >
                               <td>
                                   <input type="text" class ="form-control" id ="dni"
-                                  value="{!! $worker->dni !!}" name="dni[{!! $worker->dni !!}]" readonly>
+                                  value="{!! $worker->dni !!}"
+                                  name="dni[{!! $worker->dni !!}]" readonly tabindex="8">
                               </td>
                               <td>
                                   <input type="text" class ="form-control" id ="nom"
-                                  value="{!! $worker->nom.' '.$worker->cognoms !!}" name="nom[{!! $worker->dni !!}]" readonly>
+                                  value="{!! $worker->nom.' '.$worker->cognoms !!}"
+                                  name="nom[{!! $worker->dni !!}]" readonly tabindex="9">
                               </td>
                               <td>
-                                  <input type="time" class ="form-control" id ="entrada" name="entrada[{!! $worker->dni !!}]">
+                                  <input type="time" class ="form-control" id ="entrada"
+                                  name="entrada[{!! $worker->dni !!}]" tabindex="2">
                               </td>
                               <td>
-                                  <input type="time" class ="form-control" id ="sortida" name="sortida[{!! $worker->dni !!}]">
+                                  <input type="time" class ="form-control" id ="sortida"
+                                  name="sortida[{!! $worker->dni !!}]" tabindex="3">
                               </td>
                               <td>
                                   <input type="hidden" class ="form-control" id ="festa"
-                                      name="festa[{!! $worker->dni !!}]" value="0">
+                                      name="festa[{!! $worker->dni !!}]" value="0" >
                                   <input type="checkbox" class ="form-control" id ="festa"
-                                      name="festa[{!! $worker->dni !!}]" value="1">
+                                      name="festa[{!! $worker->dni !!}]" value="1" tabindex="4">
                               </td>
                               <td>
                                   <input type="hidden" class ="form-control" id ="vacances"
                                       name="vacances[{!! $worker->dni !!}]" value="0">
                                   <input type="checkbox" class ="form-control" id ="vacances"
-                                      name="vacances[{!! $worker->dni !!}]" value="1">
+                                      name="vacances[{!! $worker->dni !!}]" value="1" tabindex="5">
                               </td>
                               <td>
                                   <input type="hidden" class ="form-control" id ="baixa"
                                       name="baixa[{!! $worker->dni !!}]" value="0">
                                   <input type="checkbox" class ="form-control" id ="baixa"
-                                      name="baixa[{!! $worker->dni !!}]" value="1">
+                                      name="baixa[{!! $worker->dni !!}]" value="1" tabindex="6">
                               </td>
                             </tr>
                         @endforeach
@@ -97,7 +78,7 @@
                     <div class ="form-group">
                         <div class ="col-lg-10 col-lg-offset-2">
                             <button type="reset" class ="btn btn-default">Cancel·lar</button>
-                            <button type="submit" class ="btn btn-primary">Guardar</button>
+                            <button type="submit" class ="btn btn-primary" tabindex="7">Guardar</button>
                         </div>
                     </div>
                 </fieldset>
