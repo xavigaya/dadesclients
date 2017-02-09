@@ -8,13 +8,20 @@ use App\Http\Requests;
 use App\Http\Requests\TimelogsFormRequest;
 use App\Timelog;
 use App\Worker;
+use DB;
 
 class TimelogsController extends Controller
 {
   public function index(){
+      //$timelogs = Timelog::all();
       $timelogs = Timelog::all();
+      /**$timelogs = DB::table('timelogs')
+                  ->join('workers', 'timelogs.dni', '=', 'workers.dni')
+                  ->select('timelogs.*', 'workers.*')
+                  ->get();**/
+      $workers = Worker::all();
 
-      return view('timelogs.index', compact('timelogs'));
+      return view('timelogs.index', compact('timelogs', 'workers'));
   }
 
   public function create() {

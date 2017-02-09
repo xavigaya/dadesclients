@@ -16,10 +16,10 @@ class Worker extends Model
   ];
 
   public function teams() {
-      return $this->hasOne('App\Team', 'id', 'equip');
+      return $this->hasOne('App\Team', 'equip');
   }
 
   public function timelogs() {
-      return $this->hasmany('App\Timelog', 'dni', 'dni');
+      return $this->hasmany('App\Timelog', 'dni');
   }
 }

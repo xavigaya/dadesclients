@@ -42,16 +42,17 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Data</th>
-                            <th>DNI</th>
-                            <th>Entrada</th>
-                            <th>Sortida</th>
-                            <th>Festa</th>
-                            <th>Vacances</th>
-                            <th>Baixa</th>
+                            <th class="col-md-1">Data</th>
+                            <th class="col-md-1">DNI</th>
+                            <th class="col-md-3">Nom</th>
+                            <th class="col-md-1">Entrada</th>
+                            <th class="col-md-1">Sortida</th>
+                            <th class="col-md-1">Festa</th>
+                            <th class="col-md-1">Vacances</th>
+                            <th class="col-md-1">Baixa</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="text-center">
                         @foreach($timelogs as $timelog)
                             <tr >
                                 <td>
@@ -59,6 +60,14 @@
                                 </td>
                                 <td>
                                     {!! $timelog->dni !!}
+                                </td>
+                                <td class="text-left">
+                                  {!! $timelog->nom !!}
+                                  @foreach($workers as $worker)
+                                    @if($worker->dni == $timelog->dni)
+                                      {!! $worker->nom.' '.$worker->cognoms !!}
+                                    @endif
+                                  @endforeach
                                 </td>
                                 <td>
                                     {!! $timelog->entrada !!}
