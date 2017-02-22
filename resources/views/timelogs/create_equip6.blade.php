@@ -18,7 +18,7 @@
                     <legend>Afegir un Registre</legend>
                     <!--<span class="badge"><a href="/timelogs/create">Dia Anterior</a></span>-->
                     <span class="badge"><input type="date" class ="form-control" id ="data"
-                      name="data" value="{{ date('Y-m-d', strtotime( old('data').' + 1 days')) }}" autofocus tabindex="1"></span>
+                      name="data" value="{{ date('Y-m-d', strtotime( old('data').' + 1 days')) }}" autofocus></span>
                     <!--<span class="badge"><a href="/teams/create">Dia Següent</a></span>-->
                     <table  class="table">
                       <thead>
@@ -38,38 +38,38 @@
                               <td>
                                   <input type="text" class ="form-control" id ="dni"
                                   value="{!! $worker->dni !!}"
-                                  name="dni[{!! $worker->dni !!}]" readonly tabindex="8">
+                                  name="dni[{!! $worker->dni !!}]" readonly>
                               </td>
                               <td>
                                   <input type="text" class ="form-control" id ="nom"
                                   value="{!! $worker->nom.' '.$worker->cognoms !!}"
-                                  name="nom[{!! $worker->dni !!}]" readonly tabindex="9">
+                                  name="nom[{!! $worker->dni !!}]" readonly >
                               </td>
                               <td>
                                   <input type="time" class ="form-control" id ="entrada"
-                                  name="entrada[{!! $worker->dni !!}]" tabindex="2">
+                                  name="entrada[{!! $worker->dni !!}]" value="23:00">
                               </td>
                               <td>
                                   <input type="time" class ="form-control" id ="sortida"
-                                  name="sortida[{!! $worker->dni !!}]" tabindex="3">
+                                  name="sortida[{!! $worker->dni !!}]">
                               </td>
                               <td>
                                   <input type="hidden" class ="form-control" id ="festa"
                                       name="festa[{!! $worker->dni !!}]" value="0" >
                                   <input type="checkbox" class ="form-control" id ="festa"
-                                      name="festa[{!! $worker->dni !!}]" value="1" tabindex="4">
+                                      name="festa[{!! $worker->dni !!}]" value="1">
                               </td>
                               <td>
                                   <input type="hidden" class ="form-control" id ="vacances"
                                       name="vacances[{!! $worker->dni !!}]" value="0">
                                   <input type="checkbox" class ="form-control" id ="vacances"
-                                      name="vacances[{!! $worker->dni !!}]" value="1" tabindex="5">
+                                      name="vacances[{!! $worker->dni !!}]" value="1">
                               </td>
                               <td>
                                   <input type="hidden" class ="form-control" id ="baixa"
                                       name="baixa[{!! $worker->dni !!}]" value="0">
                                   <input type="checkbox" class ="form-control" id ="baixa"
-                                      name="baixa[{!! $worker->dni !!}]" value="1" tabindex="6">
+                                      name="baixa[{!! $worker->dni !!}]" value="1">
                               </td>
                             </tr>
                         @endforeach
@@ -78,7 +78,7 @@
                     <div class ="form-group">
                         <div class ="col-lg-10 col-lg-offset-2">
                             <button type="reset" class ="btn btn-default">Cancel·lar</button>
-                            <button type="submit" class ="btn btn-primary" tabindex="7">Guardar</button>
+                            <button type="submit" class ="btn btn-primary">Guardar</button>
                         </div>
                     </div>
                 </fieldset>

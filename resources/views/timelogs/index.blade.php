@@ -5,6 +5,9 @@
       <div class="panel panel-default">
           <div class="panel-heading">
             <span class="badge">
+                <a href="/timelogs/">Llistat</a>
+            </span>
+            <span class="badge">
                 <a href="/timelogs/create_equip1"><img src="/img/add.png" alt="Afegir" title="Afegir" height="20px"> Preimpressió</a>
             </span>
             <span class="badge">

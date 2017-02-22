@@ -13,12 +13,8 @@ use DB;
 class TimelogsController extends Controller
 {
   public function index(){
-      //$timelogs = Timelog::all();
-      $timelogs = Timelog::all();
-      /**$timelogs = DB::table('timelogs')
-                  ->join('workers', 'timelogs.dni', '=', 'workers.dni')
-                  ->select('timelogs.*', 'workers.*')
-                  ->get();**/
+
+      $timelogs = Timelog::all()->where('data', 'contains', '2017-02-22')->sortByDesc('data');
       $workers = Worker::all();
 
       return view('timelogs.index', compact('timelogs', 'workers'));
@@ -57,6 +53,11 @@ class TimelogsController extends Controller
   public function create_equip6() {
     $workers = Worker::all()->where('equip', '6');
     return view('timelogs.create_equip6', compact('workers'));
+  }
+
+  public function logging() {
+    //$workers = Worker::all()->where('equip', '1');
+    return view('timelogs.logging');
   }
 
 
@@ -103,6 +104,18 @@ class TimelogsController extends Controller
     }
 
     return redirect()->back()-> with ('status', 'El registre s\'ha afegit!')->withInput();
+  }
+
+  public function storelogging(TimelogsFormRequest $request) {
+    $worker = Worker::all()->where('dni', $request->get('dni'));
+    $timelog = new Timelog(array(
+          'data' => $request->get('data'),
+          'dni' => $request->get('dni'),
+          'entrada' => $request->get('hora'),
+      ));
+      $timelog->save();
+
+    return redirect()->back()-> with ('status', 'El registre s\'ha afegit!');
   }
 
 
