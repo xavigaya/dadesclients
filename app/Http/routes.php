@@ -38,7 +38,11 @@ Route::get('/teams/create', 'TeamsController@create');
 Route::post('/teams/create', 'TeamsController@store');
 
 Route::get('/timelogs', 'TimelogsController@index');
+Route::post('/timelogs', 'TimelogsController@indexSearch');
+Route::get('/timelogs/today', 'TimelogsController@indextoday');
+Route::post('/timelogs/today', 'TimelogsController@indexSearch');
 Route::get('/timelogs/create', 'TimelogsController@create');
+Route::get('/timelogs/{id?}/edit', 'TimelogsController@edit');
 Route::get('/timelogs/create_equip1', 'TimelogsController@create_equip1');
 Route::get('/timelogs/create_equip2', 'TimelogsController@create_equip2');
 Route::get('/timelogs/create_equip3', 'TimelogsController@create_equip3');

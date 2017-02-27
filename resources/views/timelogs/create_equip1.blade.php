@@ -20,16 +20,16 @@
                     <span class="badge"><input type="date" class ="form-control" id ="data"
                       name="data" value="{{ date('Y-m-d', strtotime( old('data').' + 1 days')) }}" autofocus tabindex="1"></span>
                     <!--<span class="badge"><a href="/teams/create">Dia Següent</a></span>-->
-                    <table  class="table">
+                    <table class="table">
                       <thead>
                         <tr>
-                            <th class="col-md-2">DNI</th>
-                            <th class="col-md-2">Nom</th>
-                            <th class="col-md-4">Entrada</th>
-                            <th class="col-md-4">Sortida</th>
-                            <th class="col-md-1">Festa</th>
-                            <th class="col-md-1">Vacances</th>
-                            <th class="col-md-1">Baixa</th>
+                            <th >DNI</th>
+                            <th >Nom</th>
+                            <th >Entrada</th>
+                            <!--<th class="col-md-4">Sortida</th>-->
+                            <th >Festa</th>
+                            <th >Vacances</th>
+                            <th >Baixa</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -89,11 +89,11 @@
                                   <input type="time" class ="form-control" id ="entrada"
                                   name="entrada[{!! $worker->dni !!}]">-->
                               </td>
-                              <td>
+                              <!--<td>-->
                                 <input type="hidden" class ="form-control" id ="sortida"
                                     name="sortida[{!! $worker->dni !!}]" value="0">
 
-                                <label class="custom-control custom-radio">
+                                <!--<label class="custom-control custom-radio">
                                   <input type="radio" class ="form-control custom-control-input" id ="sortida"
                                       name="sortida[{!! $worker->dni !!}]" value="22:30">
                                       <span class="custom-control-indicator"></span>
@@ -126,14 +126,14 @@
                                           name="sortida[{!! $worker->dni !!}]" value="04:30">
                                           <span class="custom-control-indicator"></span>
                                           <span class="custom-control-description">04:30</span>
-                                </label>
+                                </label>-->
 
 
                                 <!--
                                   <input type="time" class ="form-control" id ="sortida"
                                   name="sortida[{!! $worker->dni !!}]">
                                 -->
-                              </td>
+                              <!--</td>-->
                               <td>
                                   <input type="hidden" class ="form-control" id ="festa"
                                       name="festa[{!! $worker->dni !!}]" value="0" >

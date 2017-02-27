@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Requests\TimelogsFormRequest;
+use App\Http\Requests\TimelogsSearchFormRequest;
 use App\Timelog;
 use App\Worker;
 use DB;
@@ -13,11 +14,32 @@ use DB;
 class TimelogsController extends Controller
 {
   public function index(){
-
-      $timelogs = Timelog::all()->where('data', 'contains', '2017-02-22')->sortByDesc('data');
+      $timelogs = Timelog::all()->sortByDesc('data');
       $workers = Worker::all();
 
       return view('timelogs.index', compact('timelogs', 'workers'));
+  }
+
+  public function indexSearch(TimelogsSearchFormRequest $request){
+      $timelogs = Timelog::all()->where('data', $request->get('data'))->sortByDesc('nom');
+      $workers = Worker::all();
+
+      return view('timelogs.index', compact('timelogs', 'workers'));
+  }
+
+  public function indextoday(){
+      $dia = date('Y-m-d', strtotime('today'));
+      $timelogs = Timelog::all()->where('data', $dia)->sortByDesc('data');
+      $workers = Worker::all();
+
+      return view('timelogs.index', compact('timelogs', 'workers'));
+  }
+
+  public function edit($id){
+      $timelogs = Timelog::where('id', $id)->get();
+      $workers = Worker::all();
+
+      return view('timelogs.edit')->with(compact ('timelogs', 'workers'));
   }
 
   public function create() {
@@ -91,11 +113,25 @@ class TimelogsController extends Controller
         $dada['entrada'] = null;
         $dada['sortida'] = null;
       }
+      if ($dada['entrada'] == '16:00') {
+        $sortida = '22:30';
+      }  elseif ($dada['entrada'] == '11:30') {
+        $sortida = '18:00';
+      } elseif ($dada['entrada'] == '12:45') {
+        $sortida = '21:00';
+      }  elseif ($dada['entrada'] == '17:00') {
+        $sortida = '01:15';
+      } elseif ($dada['entrada'] == '20:30') {
+        $sortida = '04:30';
+      } else {
+        $sortida = $dada['sortida'];
+      }
       $timelog = new Timelog(array(
           'data' => $request->get('data'),
           'dni' => $dada['dni'],
           'entrada' => $dada['entrada'],
-          'sortida' => $dada['sortida'],
+          //'sortida' => $dada['sortida'],
+          'sortida' => $sortida,
           'festa' => $dada['festa'],
           'vacances' => $dada['vacances'],
           'baixa' => $dada['baixa'],

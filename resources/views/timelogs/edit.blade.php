@@ -1,101 +1,94 @@
 @extends('master')
-@section('title', 'Editar Contacte')
+@section('title', 'Editar Registre')
 @section('content')
-    <div class ="container col-md-8 col-md-offset-2">
-        <div class ="well well bs-component">
-            <form class ="form-horizontal" method="post">
-                @foreach ($errors->all() as $error)
-                    <p class ="alert alert-danger">{{ $error }}</p>
-                @endforeach
-                @if (session('status'))
-                    <div class ="alert alert-success">
-                        {{ session('status') }}
-                    </div>
-                @endif
-                <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-                <fieldset>
-                    <legend>Editar Contacte</legend>
-                    <div class ="form-group">
-                        <label for ="nom" class ="col-lg-2 control-label">Nom</label>
-                        <div class ="col-lg-10">
-                            <input type="text" class ="form-control" id ="nom" value="{!! $person->nom !!}" name="nom" >
-                        </div>
-                    </div>
-                    <div class ="form-group">
-                        <label for ="cognoms" class ="col-lg-2 control-label">Cognoms</label>
-                        <div class ="col-lg-10">
-                            <input type="text" class ="form-control" id ="cognoms" value="{!! $person->cognoms !!}" name="cognoms" >
-                        </div>
-                    </div>
-                    <div class ="form-group">
-                        <label for ="client" class ="col-lg-2 control-label">Publicació</label>
-                        <div class ="col-lg-10">
-                            <select class="form-control" id="idpubli" name="idpubli">
-                                @foreach($publications as $publication)
-                                    @if($publication->id == $person->idpubli)
-                                        <option value="{!! $person->idpubli !!}" selected>
-                                            {!! $publication->nom !!}
-                                        </option>
-                                    @else
-                                        <option value="{!! $publication->id !!}" >
-                                            {!! $publication->nom !!}
-                                        </option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class ="form-group">
-                        <label for ="email" class ="col-lg-2 control-label">Email</label>
-                        <div class ="col-lg-10">
-                            <input type="text" class ="form-control" id ="email" value="{!! $person->email !!}" name="email" >
-                        </div>
-                    </div>
-                    <div class ="form-group">
-                        <label for ="telf" class ="col-lg-2 control-label">Telèfon</label>
-                        <div class ="col-lg-10">
-                            <input type="text" class ="form-control" id ="telf" value="{!! $person->telf !!}" name="telf" >
-                        </div>
-                    </div>
-                    <div class ="form-group">
-                        <label for ="mobil" class ="col-lg-2 control-label">Mòbil</label>
-                        <div class ="col-lg-10">
-                            <input type="text" class ="form-control" id ="mobil" value="{!! $person->mobil !!}" name="mobil" >
-                        </div>
-                    </div>
-                    <div class ="form-group">
-                        <label for ="client" class ="col-lg-2 control-label">Tipo Contacte</label>
-                        <div class ="col-lg-10">
-                            <select class="form-control" id="idtipo" name="idtipo" >
-                                @foreach($typepeople as $typeperson)
-                                    @if($typeperson->id == $person->idtipo)
-                                        <option value="{!! $person->idtipo !!}" selected>
-                                            {!! $typeperson->tipus !!}
-                                        </option>
-                                    @else
-                                        <option value="{!! $typeperson->id !!}">
-                                            {!! $typeperson->tipus !!}
-                                        </option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class ="form-group">
-                        <label for ="info" class ="col-lg-2 control-label">Informació</label>
-                        <div class ="col-lg-10">
-                            <textarea class ="form-control" id ="info" name="info" >{!! $person->info !!}</textarea>
-                        </div>
-                    </div>
-                    <div class ="form-group">
-                        <div class ="col-lg-10 col-lg-offset-2">
-                            <button type="reset" class ="btn btn-default">Cancel·lar</button>
-                            <button type="submit" class ="btn btn-primary">Actualitzar</button>
-                        </div>
-                    </div>
-                </fieldset>
-            </form>
-            <div class="clearfix" ></div>
+<div class="container col-md-10 col-md-offset-1">
+  @include('timelogs.menuequips')
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2>Registres </h2>
         </div>
+        <form class ="form-horizontal" method="post">
+          @foreach ($errors->all() as $error)
+              <p class ="alert alert-danger">{{ $error }}</p>
+          @endforeach
+          @if (session('status'))
+              <div class ="alert alert-success">
+                  {{ session('status') }}
+              </div>
+          @endif
+          @if($timelogs->isEmpty())
+              <p>No hi ha cap registre</p>
+          @else
+              <table class="table">
+                  <thead>
+                      <tr>
+                          <th class="col-md-1">Data</th>
+                          <th class="col-md-1">DNI</th>
+                          <th class="col-md-2">Nom</th>
+                          <th class="col-md-1">Entrada</th>
+                          <th class="col-md-1">Sortida</th>
+                          <th class="col-md-1">Festa</th>
+                          <th class="col-md-1">Vacances</th>
+                          <th class="col-md-1">Baixa</th>
+                      </tr>
+                  </thead>
+                  <tbody class="text-center">
+                    @foreach($timelogs as $timelog)
+                      <tr >
+                          <td>
+                            {!! date('d/m/Y', strtotime($timelog->data)) !!}
+                          </td>
+                          <td>
+                            {!! $timelog->dni !!}
+                          </td>
+                          <td class="text-left">
+                            @foreach($workers as $worker)
+                              @if($worker->dni == $timelog->dni)
+                                {!! $worker->nom.' '.$worker->cognoms !!}
+                              @endif
+                            @endforeach
+                          </td>
+                          <td>
+                            <input type="text" class ="form-control" id ="entrada"
+                            value="{!! $timelog->entrada !!}" name="entrada">
+                          </td>
+                          <td>
+                            <input type="text" class ="form-control" id ="sortida"
+                            value="{!! $timelog->sortida !!}" name="sortida">
+                          </td>
+                          <td>
+                            @if($timelog->festa == 1)
+                              <input type="checkbox" class ="form-control" id ="festa"
+                                name="festa" value="1" checked>
+                            @else
+                            <input type="checkbox" class ="form-control" id ="festa"
+                              name="festa" value="0">
+                            @endif
+                          </td>
+                          <td>
+                            @if($timelog->vacances == 1)
+                              <input type="checkbox" class ="form-control" id ="vacances"
+                                name="vacances" value="1" checked>
+                            @else
+                            <input type="checkbox" class ="form-control" id ="vacances"
+                              name="vacances" value="0">
+                            @endif
+                          </td>
+                          <td>
+                            @if($timelog->baixa == 1)
+                              <input type="checkbox" class ="form-control" id ="baixa"
+                                name="baixa" value="1" checked>
+                            @else
+                            <input type="checkbox" class ="form-control" id ="baixa"
+                              name="baixa" value="0">
+                            @endif
+                          </td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+              </table>
+          @endif
+        </form>
     </div>
+</div>
 @endsection
