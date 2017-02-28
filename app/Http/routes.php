@@ -38,24 +38,21 @@ Route::get('/teams/create', 'TeamsController@create');
 Route::post('/teams/create', 'TeamsController@store');
 
 Route::get('/timelogs', 'TimelogsController@index');
-Route::post('/timelogs', 'TimelogsController@indexSearch');
+Route::post('/timelogs', 'TimelogsController@search');
 Route::get('/timelogs/today', 'TimelogsController@indextoday');
-Route::post('/timelogs/today', 'TimelogsController@indexSearch');
+Route::post('/timelogs/today', 'TimelogsController@search');
 Route::get('/timelogs/create', 'TimelogsController@create');
 Route::get('/timelogs/{id?}/edit', 'TimelogsController@edit');
-Route::get('/timelogs/create_equip1', 'TimelogsController@create_equip1');
-Route::get('/timelogs/create_equip2', 'TimelogsController@create_equip2');
-Route::get('/timelogs/create_equip3', 'TimelogsController@create_equip3');
-Route::get('/timelogs/create_equip4', 'TimelogsController@create_equip4');
-Route::get('/timelogs/create_equip5', 'TimelogsController@create_equip5');
-Route::get('/timelogs/create_equip6', 'TimelogsController@create_equip6');
+Route::post('/timelogs/{id?}/edit', 'TimelogsController@update');
+Route::get('/timelogs/{id?}/delete','TimelogsController@destroy');
+Route::get('/timelogs/{team?}/create_equip', 'TimelogsController@create_equip');
 Route::get('/timelogs/logging', 'TimelogsController@logging');
-Route::post('/timelogs/create_equip1', 'TimelogsController@store');
-Route::post('/timelogs/create_equip2', 'TimelogsController@store');
+Route::post('/timelogs/{team?}/create_equip', 'TimelogsController@store');
+/**Route::post('/timelogs/create_equip2', 'TimelogsController@store');
 Route::post('/timelogs/create_equip3', 'TimelogsController@store');
 Route::post('/timelogs/create_equip4', 'TimelogsController@store');
 Route::post('/timelogs/create_equip5', 'TimelogsController@store');
-Route::post('/timelogs/create_equip6', 'TimelogsController@store');
+Route::post('/timelogs/create_equip6', 'TimelogsController@store');**/
 Route::post('/timelogs/logging', 'TimelogsController@storelogging');
 
 
@@ -70,20 +67,6 @@ Route::get('/controlph', 'ControlPhController@index');
 Route::get('/controlph/nevera3', 'ControlPhController@nevera3');
 Route::get('/controlph/create', 'ControlPhController@create');
 Route::post('/controlph/create', 'ControlPhController@store');
-
-/**
-Route::get('sendemail', function(){
-    $data = array(
-        'name' => "Correu de Prova",
-    );
-
-    Mail::send('emails.welcome', $data, function ($message){
-        $message->from('correudeprova@segre.com', 'Correu de Prova');
-        $message->to('xavigaya@gmail.com')->subject('Correu de prova');
-    });
-    return "Email enviat correctament";
-});
-**/
 
 
 // Customers

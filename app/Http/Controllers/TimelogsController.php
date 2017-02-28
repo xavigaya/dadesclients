@@ -13,6 +13,7 @@ use DB;
 
 class TimelogsController extends Controller
 {
+
   public function index(){
       $timelogs = Timelog::all()->sortByDesc('data');
       $workers = Worker::all();
@@ -20,12 +21,15 @@ class TimelogsController extends Controller
       return view('timelogs.index', compact('timelogs', 'workers'));
   }
 
-  public function indexSearch(TimelogsSearchFormRequest $request){
+
+  public function search(TimelogsSearchFormRequest $request){
       $timelogs = Timelog::all()->where('data', $request->get('data'))->sortByDesc('nom');
+      //$workers = Worker::where('team', $request->get('team'));
       $workers = Worker::all();
 
       return view('timelogs.index', compact('timelogs', 'workers'));
   }
+
 
   public function indextoday(){
       $dia = date('Y-m-d', strtotime('today'));
@@ -35,6 +39,7 @@ class TimelogsController extends Controller
       return view('timelogs.index', compact('timelogs', 'workers'));
   }
 
+
   public function edit($id){
       $timelogs = Timelog::where('id', $id)->get();
       $workers = Worker::all();
@@ -42,40 +47,43 @@ class TimelogsController extends Controller
       return view('timelogs.edit')->with(compact ('timelogs', 'workers'));
   }
 
-  public function create() {
+
+  public function update(TimelogsFormRequest $request) {
+    $timelog = Timelog::whereId($request->get('id'))->firstOrFail();
+
+    if ($request->get('festa') || $request->get('vacances') || $request->get('baixa')) {
+      $entrada = null;
+      $sortida = null;
+    } else {
+      $entrada = $request->get('entrada');
+      $sortida = $request->get('sortida');
+    }
+
+    $timelog->data = date('Y-m-d', strtotime($request->get('data')));
+    $timelog->dni = $request->get('dni');
+    $timelog->entrada = $entrada;
+    $timelog->sortida = $sortida;
+    $timelog->festa = $request->get('festa');
+    $timelog->vacances = $request->get('vacances');
+    $timelog->baixa = $request->get('baixa');
+    $timelog->save();
+
+    return redirect('/timelogs')-> with ('status', 'El registre '.$request->get('id').' ha estat modificat!');
+  }
+
+
+  /**public function create() {
     $workers = Worker::all();
     return view('timelogs.create', compact('workers'));
+  }**/
+
+
+  public function create_equip($team) {
+    $timelog = Timelog::all();
+    $workers = Worker::all()->where('equip', $team);
+    return view('timelogs.create_equip'.$team, compact('workers'));
   }
 
-  public function create_equip1() {
-    $workers = Worker::all()->where('equip', '1');
-    return view('timelogs.create_equip1', compact('workers'));
-  }
-
-  public function create_equip2() {
-    $workers = Worker::all()->where('equip', '2');
-    return view('timelogs.create_equip2', compact('workers'));
-  }
-
-  public function create_equip3() {
-    $workers = Worker::all()->where('equip', '3');
-    return view('timelogs.create_equip3', compact('workers'));
-  }
-
-  public function create_equip4() {
-    $workers = Worker::all()->where('equip', '4');
-    return view('timelogs.create_equip4', compact('workers'));
-  }
-
-  public function create_equip5() {
-    $workers = Worker::all()->where('equip', '5');
-    return view('timelogs.create_equip5', compact('workers'));
-  }
-
-  public function create_equip6() {
-    $workers = Worker::all()->where('equip', '6');
-    return view('timelogs.create_equip6', compact('workers'));
-  }
 
   public function logging() {
     //$workers = Worker::all()->where('equip', '1');
@@ -130,7 +138,6 @@ class TimelogsController extends Controller
           'data' => $request->get('data'),
           'dni' => $dada['dni'],
           'entrada' => $dada['entrada'],
-          //'sortida' => $dada['sortida'],
           'sortida' => $sortida,
           'festa' => $dada['festa'],
           'vacances' => $dada['vacances'],
@@ -138,8 +145,7 @@ class TimelogsController extends Controller
       ));
       $timelog->save();
     }
-
-    return redirect()->back()-> with ('status', 'El registre s\'ha afegit!')->withInput();
+    return redirect()->back()-> with ('status', 'Els registres s\'han afegit!')->withInput();
   }
 
   public function storelogging(TimelogsFormRequest $request) {
@@ -156,8 +162,8 @@ class TimelogsController extends Controller
 
 
   public function destroy($id) {
-      /**$input = Input::whereId($id)->firstOrFail();
-      $input-> delete();
-      return redirect('/inputs')-> with ('status', 'El tipo d\'entrada '.$id.' ha estat esborrat!');**/
+      $timelog = Timelog::whereId($id)->firstOrFail();
+      $timelog-> delete();
+      return redirect('/timelogs')-> with ('status', 'El registre '.$id.' ha estat esborrat!');
   }
 }

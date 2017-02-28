@@ -16,35 +16,43 @@
                   {{ session('status') }}
               </div>
           @endif
+          <input type="hidden" name="_token" value="{!! csrf_token() !!}">
           @if($timelogs->isEmpty())
               <p>No hi ha cap registre</p>
           @else
-              <table class="table">
+              <table class="table col-md-12">
                   <thead>
                       <tr>
                           <th class="col-md-1">Data</th>
-                          <th class="col-md-1">DNI</th>
-                          <th class="col-md-2">Nom</th>
+                          <th class="col-md-2">DNI</th>
+                          <th class="col-md-3">Nom</th>
                           <th class="col-md-1">Entrada</th>
                           <th class="col-md-1">Sortida</th>
                           <th class="col-md-1">Festa</th>
                           <th class="col-md-1">Vacances</th>
                           <th class="col-md-1">Baixa</th>
+                          <th class="col-md-1">Borrar</th>
                       </tr>
                   </thead>
                   <tbody class="text-center">
                     @foreach($timelogs as $timelog)
+                      <input type="hidden" class ="form-control" id ="id"
+                        value="{!! $timelog->id !!}" name="id">
                       <tr >
                           <td>
-                            {!! date('d/m/Y', strtotime($timelog->data)) !!}
+                            <input type="date" class ="form-control" id ="data"
+                            value="{!! $timelog->data !!}" name="data" readonly>
                           </td>
                           <td>
-                            {!! $timelog->dni !!}
+                            <input type="text" class ="form-control" id ="dni"
+                            value="{!! $timelog->dni !!}" readonly name="dni" >
                           </td>
                           <td class="text-left">
                             @foreach($workers as $worker)
                               @if($worker->dni == $timelog->dni)
-                                {!! $worker->nom.' '.$worker->cognoms !!}
+                                <input type="text" class ="form-control" id ="nom"
+                                value="{!! $worker->nom.' '.$worker->cognoms !!}" readonly
+                                name="nom" >
                               @endif
                             @endforeach
                           </td>
@@ -58,36 +66,59 @@
                           </td>
                           <td>
                             @if($timelog->festa == 1)
+                              <input type="hidden" class ="form-control" id ="festa"
+                                name="festa" value="0">
                               <input type="checkbox" class ="form-control" id ="festa"
                                 name="festa" value="1" checked>
                             @else
-                            <input type="checkbox" class ="form-control" id ="festa"
-                              name="festa" value="0">
+                              <input type="hidden" class ="form-control" id ="festa"
+                                name="festa" value="0">
+                              <input type="checkbox" class ="form-control" id ="festa"
+                                name="festa" value="1">
                             @endif
                           </td>
                           <td>
                             @if($timelog->vacances == 1)
+                              <input type="hidden" class ="form-control" id ="vacances"
+                                name="vacances" value="0">
                               <input type="checkbox" class ="form-control" id ="vacances"
                                 name="vacances" value="1" checked>
                             @else
-                            <input type="checkbox" class ="form-control" id ="vacances"
-                              name="vacances" value="0">
+                              <input type="hidden" class ="form-control" id ="vacances"
+                                name="vacances" value="0">
+                              <input type="checkbox" class ="form-control" id ="vacances"
+                                name="vacances" value="1">
                             @endif
                           </td>
                           <td>
                             @if($timelog->baixa == 1)
+                              <input type="hidden" class ="form-control" id ="baixa"
+                                name="baixa" value="0">
                               <input type="checkbox" class ="form-control" id ="baixa"
                                 name="baixa" value="1" checked>
                             @else
-                            <input type="checkbox" class ="form-control" id ="baixa"
-                              name="baixa" value="0">
+                              <input type="hidden" class ="form-control" id ="baixa"
+                                name="baixa" value="0">
+                              <input type="checkbox" class ="form-control" id ="baixa"
+                                name="baixa" value="1">
                             @endif
+                          </td>
+                          <td>
+                            <a href="/timelogs/{!! $timelog->id !!}/delete">
+                              <img src="/img/trash.png" alt="Editar" title="Editar" height="20px">
+                            </a>
                           </td>
                       </tr>
                     @endforeach
                   </tbody>
               </table>
           @endif
+          <div class ="form-group">
+              <div class ="col-lg-10 col-lg-offset-2">
+                  <button type="reset" class ="btn btn-default">Cancel·lar</button>
+                  <button type="submit" class ="btn btn-primary">Guardar</button>
+              </div>
+          </div>
         </form>
     </div>
 </div>
