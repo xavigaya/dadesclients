@@ -14,7 +14,17 @@
                   name="data" value="{{ date('Y-m-d', strtotime( old('data').' + 1 days')) }}"></span>
               <!--<span class="badge"><input type="text" class ="form-control" id ="team"
                   name="team" placeholder="equip"></span>-->
-              <button type="submit" class ="btn btn-primary">Buscar</button>
+
+                <select class="badge" name="team">
+                  <option value="1">Preimpressió</option>
+                  <option value="2">Manteniment</option>
+                  <option value="3">Impressió tarde</option>
+                  <option value="4">Administració</option>
+                  <option value="5">Impressió Nit</option>
+                  <option value="6">Cierre</option>
+                </select>
+
+              <button type="submit" class ="btn btn-primary" name=>Buscar</button>
           </form>
         </span>
       </div>

@@ -24,8 +24,15 @@ class TimelogsController extends Controller
 
   public function search(TimelogsSearchFormRequest $request){
       $timelogs = Timelog::all()->where('data', $request->get('data'))->sortByDesc('nom');
-      //$workers = Worker::where('team', $request->get('team'));
       $workers = Worker::all();
+      /**$timelogs = DB::table('timelogs')
+                  ->join('workers', 'timelogs.dni', '=', 'workers.dni')
+                  ->select('timelogs.*', 'workers.nom')
+                  ->where('workers.equip', '1')
+                  ->get();**/
+      /**$timelogs = DB::raw('select timelogs.*
+from timelogs inner join workers on workers.dni = timelogs.dni
+where ((timelogs.data = "2017-01-01") and (workers.equip = 2))');**/
 
       return view('timelogs.index', compact('timelogs', 'workers'));
   }

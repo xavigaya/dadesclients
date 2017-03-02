@@ -39,9 +39,9 @@ Route::post('/teams/create', 'TeamsController@store');
 
 Route::get('/timelogs', 'TimelogsController@index');
 Route::post('/timelogs', 'TimelogsController@search');
+Route::post('/timelogs/{all}', 'TimelogsController@search');
 Route::get('/timelogs/today', 'TimelogsController@indextoday');
-Route::post('/timelogs/today', 'TimelogsController@search');
-Route::get('/timelogs/create', 'TimelogsController@create');
+//Route::get('/timelogs/create', 'TimelogsController@create');
 Route::get('/timelogs/{id?}/edit', 'TimelogsController@edit');
 Route::post('/timelogs/{id?}/edit', 'TimelogsController@update');
 Route::get('/timelogs/{id?}/delete','TimelogsController@destroy');

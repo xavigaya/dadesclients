@@ -13,7 +13,7 @@
           </div>
         @endif
         @if($timelogs->isEmpty())
-          <p>No hi ha cap registre</p>
+          <p>No hi ha cap registre </p>
         @else
           <table class="table">
             <thead>
