@@ -48,11 +48,7 @@ Route::get('/timelogs/{id?}/delete','TimelogsController@destroy');
 Route::get('/timelogs/{team?}/create_equip', 'TimelogsController@create_equip');
 Route::get('/timelogs/logging', 'TimelogsController@logging');
 Route::post('/timelogs/{team?}/create_equip', 'TimelogsController@store');
-/**Route::post('/timelogs/create_equip2', 'TimelogsController@store');
-Route::post('/timelogs/create_equip3', 'TimelogsController@store');
-Route::post('/timelogs/create_equip4', 'TimelogsController@store');
-Route::post('/timelogs/create_equip5', 'TimelogsController@store');
-Route::post('/timelogs/create_equip6', 'TimelogsController@store');**/
+
 Route::post('/timelogs/logging', 'TimelogsController@storelogging');
 
 

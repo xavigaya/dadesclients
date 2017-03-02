@@ -66,10 +66,15 @@
                                       name="vacances[{!! $worker->dni !!}]" value="1">
                               </td>
                               <td>
-                                  <input type="hidden" class ="form-control" id ="baixa"
+                                @if ($worker->dni === "73191669B")
+                                    <input type="checkbox" class ="form-control" id ="baixa"
+                                      name="baixa[{!! $worker->dni !!}]" value="1" checked>
+                                @else
+                                    <input type="hidden" class ="form-control" id ="baixa"
                                       name="baixa[{!! $worker->dni !!}]" value="0">
-                                  <input type="checkbox" class ="form-control" id ="baixa"
+                                    <input type="checkbox" class ="form-control" id ="baixa"
                                       name="baixa[{!! $worker->dni !!}]" value="1">
+                                @endif
                               </td>
                             </tr>
                         @endforeach
