@@ -15,7 +15,7 @@
                 @endif
                 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                 <fieldset>
-                    <legend>Afegir un Registre {{ date('d-m-Y', strtotime( old('data').' + 1 days')) }}</legend>
+                    <legend>Afegir un Registre </legend>
                     <!--<span class="badge"><a href="/timelogs/create">Dia Anterior</a></span>-->
                     <span class="badge"><input type="date" class ="form-control" id ="data"
                       name="data" value="{{ date('Y-m-d', strtotime( old('data').' + 1 days')) }}" autofocus tabindex="1"></span>
@@ -46,12 +46,28 @@
                                   name="nom[{!! $worker->dni !!}]" readonly tabindex="9">
                               </td>
                               <td>
+                                @if ($worker->dni === "41086189R")
+                                  <input type="time" class ="form-control" id ="entrada"
+                                  name="entrada[{!! $worker->dni !!}]" value="16:00" tabindex="2">
+                                @elseif ($worker->dni === "47686071X")
+                                  <input type="time" class ="form-control" id ="entrada"
+                                  name="entrada[{!! $worker->dni !!}]" value="10:00" tabindex="2">
+                                @else
                                   <input type="time" class ="form-control" id ="entrada"
                                   name="entrada[{!! $worker->dni !!}]" tabindex="2">
+                                @endif
                               </td>
                               <td>
+                                @if ($worker->dni === "41086189R")
+                                  <input type="time" class ="form-control" id ="sortida"
+                                  name="sortida[{!! $worker->dni !!}]" value="23:30" tabindex="3">
+                                @elseif ($worker->dni === "47686071X")
+                                  <input type="time" class ="form-control" id ="sortida"
+                                  name="sortida[{!! $worker->dni !!}]" value="14:00" tabindex="3">
+                                @else
                                   <input type="time" class ="form-control" id ="sortida"
                                   name="sortida[{!! $worker->dni !!}]" tabindex="3">
+                                @endif
                               </td>
                               <td>
                                   <input type="hidden" class ="form-control" id ="festa"

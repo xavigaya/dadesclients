@@ -5,7 +5,9 @@
     @include('timelogs.menuequips')
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h2>Registres</h2>
+          <h2>Registres
+            
+          </h2>
         </div>
         @if (session('status'))
           <div class ="alert alert-success">
@@ -18,6 +20,7 @@
           <table class="table">
             <thead>
               <tr>
+                <th>#</th>
                 <th class="col-md-1">Data</th>
                 <th class="col-md-1">DNI</th>
                 <th class="col-md-2">Nom</th>
@@ -27,11 +30,16 @@
                 <th class="col-md-1">Vacances</th>
                 <th class="col-md-1">Baixa</th>
                 <th class="col-md-1">Editar</th>
+                <th class="col-md-1">Borrar</th>
               </tr>
             </thead>
             <tbody class="text-center">
+              {!! $i = 1 !!}
               @foreach($timelogs as $timelog)
                   <tr >
+                      <td>
+                          {!! $i++ !!}
+                      </td>
                       <td>
                         {!! date('d/m/y', strtotime( $timelog->data )) !!}
                       </td>
@@ -39,12 +47,7 @@
                         {!! $timelog->dni !!}
                       </td>
                       <td class="text-left">
-
-                        @foreach($workers as $worker)
-                          @if($worker->dni == $timelog->dni)
-                            {!! $worker->nom.' '.$worker->cognoms !!}
-                          @endif
-                        @endforeach
+                        {!! $timelog->nom.' '.$timelog->cognoms !!}
                       </td>
                       <td>
                         {!! $timelog->entrada !!}
@@ -66,11 +69,18 @@
                           <img src="/img/edit.png" alt="Editar" title="Editar" height="20px">
                         </a>
                       </td>
+                      <td>
+                        <a href="/timelogs/{!! $timelog->id !!}/delete">
+                          <img src="/img/trash.png" alt="Editar" title="Editar" height="20px">
+                        </a>
+                      </td>
                   </tr>
                 @endforeach
             </tbody>
           </table>
         @endif
     </div>
+    {!! $timelogs->links() !!}
+
   </div>
 @endsection
