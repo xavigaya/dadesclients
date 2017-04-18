@@ -19,7 +19,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h2>Mesures Ph</h2>
-                
+
             </div>
             @if (session('status'))
                 <div class ="alert alert-success">
@@ -71,6 +71,7 @@
                 </table>
             @endif
         </div>
+        {!! $phs->links() !!}
     </div>
 
 @endsection

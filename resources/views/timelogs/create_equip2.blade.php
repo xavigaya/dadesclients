@@ -47,11 +47,11 @@
                               </td>
                               <td>
                                   <input type="time" class ="form-control" id ="entrada"
-                                  name="entrada[{!! $worker->dni !!}]" value="07:30" tabindex="2">
+                                  name="entrada[{!! $worker->dni !!}]" value="07:00" tabindex="2">
                               </td>
                               <td>
                                   <input type="time" class ="form-control" id ="sortida"
-                                  name="sortida[{!! $worker->dni !!}]" value="15:00" tabindex="3">
+                                  name="sortida[{!! $worker->dni !!}]" value="14:30" tabindex="3">
                               </td>
                               <td>
                                   <input type="hidden" class ="form-control" id ="festa"

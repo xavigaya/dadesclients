@@ -39,17 +39,16 @@ Route::post('/teams/create', 'TeamsController@store');
 
 Route::get('/timelogs', 'TimelogsController@index');
 Route::post('/timelogs', 'TimelogsController@search');
-Route::post('/timelogs/{any}', 'TimelogsController@search');
 Route::get('/timelogs/today', 'TimelogsController@indextoday');
-//Route::get('/timelogs/{date?}/{team?}', 'TimelogsController@search2');
+//Route::get('/timelogs/{date?}/{team?}/show', 'TimelogsController@search2');
 //Route::post('/timelogs/{date?}/{team?}', 'TimelogsController@update');
 Route::get('/timelogs/{id?}/edit', 'TimelogsController@edit');
 Route::post('/timelogs/{id?}/edit', 'TimelogsController@update');
 Route::get('/timelogs/{id?}/delete','TimelogsController@destroy');
 Route::get('/timelogs/{team?}/create_equip/', 'TimelogsController@create_equip');
-Route::get('/timelogs/logging', 'TimelogsController@logging');
-Route::post('/timelogs/{team?}/create_equip', 'TimelogsController@store');
+Route::post('/timelogs/{team?}/create_equip/', 'TimelogsController@store');
 
+Route::get('/timelogs/logging', 'TimelogsController@logging');
 Route::post('/timelogs/logging', 'TimelogsController@storelogging');
 
 

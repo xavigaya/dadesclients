@@ -7,7 +7,7 @@
         <div class="panel-heading">
             <h2>Registres {!! date('d/m/y', strtotime( $data )) !!}</h2>
         </div>
-        <form class ="form-horizontal" method="post">
+        <form class ="form-horizontal" method="post" action="TimelogsController@update">
           @foreach ($errors->all() as $error)
               <p class ="alert alert-danger">{{ $error }}</p>
           @endforeach
@@ -18,7 +18,8 @@
           @endif
           <input type="hidden" name="_token" value="{!! csrf_token() !!}">
           @if($timelogs->isEmpty())
-              <p>No hi ha cap registre</p>
+              <p>No hi ha cap registre </p>
+              @include('timelogs.create_equip1')
           @else
               <table class="table col-md-12">
                   <thead>

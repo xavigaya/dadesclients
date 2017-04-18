@@ -13,7 +13,11 @@ use DB;
 
 class TimelogsController extends Controller
 {
-
+  /**
+  * Show a list of all the registers in the database
+  *
+  * @return default view
+  **/
   public function index()
   {
       $timelogs = Timelog::join('workers', 'timelogs.dni', '=', 'workers.dni')
@@ -23,7 +27,11 @@ class TimelogsController extends Controller
       return view('timelogs.index', compact('timelogs'));
   }
 
-
+  /**
+  * Show a list of the registers in a date from a team
+  *
+  * @return default view
+  **/
   public function search(TimelogsSearchFormRequest $request)
   {
     $data = $request->get('data');
@@ -46,9 +54,15 @@ class TimelogsController extends Controller
     }
     return view('timelogs.index', compact('timelogs'));
     //return view('timelogs.teamedit', compact('timelogs', 'data'));
-    //return redirect('/timelogs/'.$data.'/'.$team);
+    //return redirect('/timelogs/'.$data.'/'.$equip);
   }
 
+  /**
+  * Show an editable list of the registers in an
+  * specific date from a team passed in the url
+  *
+  * @return default view
+  **/
   public function search2($date, $team)
   {
       $data = $date;
@@ -69,15 +83,13 @@ class TimelogsController extends Controller
                           ->select('timelogs.*', 'workers.nom', 'workers.cognoms', 'workers.id as idworker')
                           ->simplePaginate(10);
       }
-
-      /**$timelogs = Timelog::join('workers', 'timelogs.dni', '=', 'workers.dni')
-                        ->where('workers.equip', $equip)
-                        ->where('timelogs.data', $data)
-                        ->select('timelogs.*', 'workers.nom', 'workers.cognoms', 'workers.id as idworker')
-                        ->simplePaginate(10);**/
       return view('timelogs.teamedit', compact('timelogs', 'data', 'equip'));
   }
 
+  /**
+  *
+  *
+  **/
   public function indextoday()
   {
       $dia = date('Y-m-d', strtotime('today'));
@@ -178,9 +190,9 @@ class TimelogsController extends Controller
         $dada['entrada'] = null;
         $dada['sortida'] = null;
       }
-      if ($dada['entrada'] == '16:00')
+      if ($dada['entrada'] == '16:15')
       {
-        $sortida = '22:30';
+        $sortida = '22:45';
       }
       elseif ($dada['entrada'] == '11:30')
       {
@@ -196,7 +208,7 @@ class TimelogsController extends Controller
       }
       elseif ($dada['entrada'] == '20:30')
       {
-        $sortida = '04:30';
+        $sortida = '04:45';
       }
       else
       {

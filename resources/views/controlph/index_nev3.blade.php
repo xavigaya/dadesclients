@@ -77,6 +77,7 @@
                 </table>
             @endif
         </div>
+        {!! $phs->links() !!}
     </div>
 
 @endsection

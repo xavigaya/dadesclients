@@ -51,7 +51,7 @@
 
                                 <label class="custom-control custom-radio">
                                   <input type="radio" class ="form-control custom-control-input" id ="entrada"
-                                      name="entrada[{!! $worker->dni !!}]" value="16:00">
+                                      name="entrada[{!! $worker->dni !!}]" value="16:15">
                                       <span class="custom-control-indicator"></span>
                                       <span class="custom-control-description">16:00</span>
                                 </label>
