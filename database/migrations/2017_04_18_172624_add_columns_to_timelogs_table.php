@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTimelogsTable extends Migration
+class AddColumnsToTimelogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,9 @@ class CreateTimelogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('timelogs', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+        Schema::table('timelogs', function (Blueprint $table) {
+		$table->tinyInteger('permis');
+		$table->string('observacions');
         });
     }
 
@@ -25,6 +25,8 @@ class CreateTimelogsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('timelogs');
+        Schema::table('timelogs', function (Blueprint $table) {
+            //
+        });
     }
 }

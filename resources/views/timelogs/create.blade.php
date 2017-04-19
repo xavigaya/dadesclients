@@ -30,6 +30,8 @@
                             <th>Festa</th>
                             <th>Vacances</th>
                             <th>Baixa</th>
+                            <th>Perm√s</th>
+                            <th>Observacions</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -70,6 +72,16 @@
                                       name="baixa[{!! $worker->dni !!}]" value="0">
                                   <input type="checkbox" class ="form-control" id ="baixa"
                                       name="baixa[{!! $worker->dni !!}]" value="1" tabindex="6">
+                              </td>
+                              <td>
+                                  <input type="hidden" class ="form-control" id ="permis"
+                                      name="permis[{!! $worker->dni !!}]" value="0">
+                                  <input type="checkbox" class ="form-control" id ="permis"
+                                      name="permis[{!! $worker->dni !!}]" value="1" tabindex="7">
+                              </td>
+                              <td>
+                                  <input type="text" class ="form-control" id ="observacions"
+                                      name="observacions[{!! $worker->dni !!}]" value="1" tabindex="8">
                               </td>
                             </tr>
                         @endforeach

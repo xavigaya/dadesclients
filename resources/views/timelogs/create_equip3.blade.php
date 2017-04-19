@@ -23,23 +23,25 @@
                     <table  class="table">
                       <thead>
                         <tr>
-                            <th>DNI</th>
+
                             <th>Nom</th>
                             <th>Entrada</th>
                             <th>Sortida</th>
                             <th>Festa</th>
                             <th>Vacances</th>
                             <th>Baixa</th>
+                            <th>Permís</th>
+                            <th>Observacions</th>
                         </tr>
                       </thead>
                       <tbody>
                         @foreach($workers as $worker)
                             <tr >
-                              <td>
-                                  <input type="text" class ="form-control" id ="dni"
+
+                                  <input type="hidden" class ="form-control" id ="dni"
                                   value="{!! $worker->dni !!}"
                                   name="dni[{!! $worker->dni !!}]" readonly tabindex="8">
-                              </td>
+
                               <td>
                                   <input type="text" class ="form-control" id ="nom"
                                   value="{!! $worker->nom.' '.$worker->cognoms !!}"
@@ -70,6 +72,16 @@
                                       name="baixa[{!! $worker->dni !!}]" value="0">
                                   <input type="checkbox" class ="form-control" id ="baixa"
                                       name="baixa[{!! $worker->dni !!}]" value="1" tabindex="6">
+                              </td>
+                              <td>
+                                  <input type="hidden" class ="form-control" id ="permis"
+                                      name="permis[{!! $worker->dni !!}]" value="0">
+                                  <input type="checkbox" class ="form-control" id ="permis"
+                                      name="permis[{!! $worker->dni !!}]" value="1" tabindex="6">
+                              </td>
+                              <td>
+                                  <input type="text" class ="form-control" id ="observacions"
+                                      name="observacions[{!! $worker->dni !!}]" tabindex="6">
                               </td>
                             </tr>
                         @endforeach

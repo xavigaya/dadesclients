@@ -114,7 +114,7 @@ class TimelogsController extends Controller
   {
     $timelog = Timelog::whereId($request->get('id'))->firstOrFail();
 
-    if ($request->get('festa') || $request->get('vacances') || $request->get('baixa')) {
+    if ($request->get('festa') || $request->get('vacances') || $request->get('baixa') || $request->get('permis')) {
       $entrada = null;
       $sortida = null;
     } else {
@@ -129,6 +129,8 @@ class TimelogsController extends Controller
     $timelog->festa = $request->get('festa');
     $timelog->vacances = $request->get('vacances');
     $timelog->baixa = $request->get('baixa');
+    $timelog->permis = $request->get('permis');
+    $timelog->observacions = $request->get('observacions');
     $timelog->save();
 
     return redirect('/timelogs')-> with ('status', 'El registre '.$request->get('id').' ha estat modificat!');
@@ -182,10 +184,18 @@ class TimelogsController extends Controller
     {
       $dades[$key] += array('baixa'=>$value);
     }
+    foreach ($request->get('permis') as $key => $value)
+    {
+      $dades[$key] += array('permis'=>$value);
+    }
+    foreach ($request->get('observacions') as $key => $value)
+    {
+      $dades[$key] += array('observacions'=>$value);
+    }
 
     foreach ($dades as $dada)
     {
-      if ($dada['festa'] || $dada['vacances'] || $dada['baixa'])
+      if ($dada['festa'] || $dada['vacances'] || $dada['baixa'] || $dada['permis'])
       {
         $dada['entrada'] = null;
         $dada['sortida'] = null;
@@ -223,6 +233,8 @@ class TimelogsController extends Controller
           'festa' => $dada['festa'],
           'vacances' => $dada['vacances'],
           'baixa' => $dada['baixa'],
+          'permis' => $dada['permis'],
+          'observacions' => $dada['observacions'],
       ));
       $timelog->save();
     }
