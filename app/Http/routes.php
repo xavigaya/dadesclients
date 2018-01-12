@@ -52,9 +52,15 @@ Route::post('/timelogs/{team?}/create_equip/', 'TimelogsController@store');
 Route::get('/timelogs/logging', 'TimelogsController@logging');
 Route::post('/timelogs/logging', 'TimelogsController@storelogging');
 
+
+
+
 //Consultes dels registres d'horaris
 Route::get('/timelogs/consulta', 'TimelogsController@setConsulta');
 Route::post('/timelogs/consulta', 'TimelogsController@getConsulta');
+//Route::get('/timelogs/showconsulta', 'TimelogsController@getConsulta');
+
+
 
 
 // RoturesPaper

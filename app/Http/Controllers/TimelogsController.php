@@ -14,6 +14,8 @@ use DB;
 
 class TimelogsController extends Controller
 {
+    
+    
   /**
   * Show a list of all the registers in the database
   *
@@ -28,6 +30,8 @@ class TimelogsController extends Controller
       return view('timelogs.index', compact('timelogs'));
   }
 
+    
+    
   /**
   * Show a list of the registers in a date from a team
   *
@@ -58,6 +62,9 @@ class TimelogsController extends Controller
     //return redirect('/timelogs/'.$data.'/'.$equip);
   }
 
+    
+    
+    
   /**
   * Show an editable list of the registers in an
   * specific date from a team passed in the url
@@ -87,6 +94,8 @@ class TimelogsController extends Controller
       return view('timelogs.teamedit', compact('timelogs', 'data', 'equip'));
   }
 
+    
+    
   /**
   * List of today working timetable
   *
@@ -148,6 +157,8 @@ class TimelogsController extends Controller
     return redirect('/timelogs')-> with ('status', 'El registre '.$request->get('id').' ha estat modificat!');
   }
 
+    
+    
   /**
   * Creating a team
   *
@@ -159,6 +170,8 @@ class TimelogsController extends Controller
     return view('timelogs.create_equip'.$team, compact('workers'));
   }
 
+    
+    
   /**
   * Save input data form
   *
@@ -253,6 +266,7 @@ class TimelogsController extends Controller
   }
 
 
+    
   /**
     * Input form for registering 
     *
@@ -261,6 +275,8 @@ class TimelogsController extends Controller
   {
     return view('timelogs.logging');
   }
+
+    
     
   /**
     * Guardar els valors del formulari de chek-in / check-out
@@ -316,13 +332,6 @@ class TimelogsController extends Controller
     
     
     
-    
-    
-    
-    
-    
-    
-    
   /**
     * Consulta horas treballades per treballador entre dues dates donades
     *
@@ -335,7 +344,7 @@ class TimelogsController extends Controller
   }
     
   /**
-    * Shows a list of days and sum of hours of a workers
+    * Gets a list of days and sum of hours of a worker
     *
     *
   **/
@@ -343,19 +352,11 @@ class TimelogsController extends Controller
   {
       //$timelogs = Timelog::whereId($request->get('workerid'))->where('data', '>=', $request->get('inici'));
       $timelogs = Timelog::all();
-      
-      return view('timelogs.showconsulta', compact('timelogs'));
+      $workers = Worker::orderBy('nom')->get();
+      return view('timelogs.consulta')->with(compact('timelogs', 'workers'));
   }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
+ 
     
     
     
