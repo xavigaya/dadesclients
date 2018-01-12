@@ -1,6 +1,6 @@
 <html lang="es">
     <head>
-        <title> Registre Entrada / Sortida </title>
+        <title>REGISTRE HORARIS LERIGRAF</title>
         <link rel="stylesheet" href="/css/bootstrap.min.css" >
         <link rel="stylesheet" href="/css/bootstrap-theme.min.css" >
         <link rel="stylesheet" href="/css/estils.css" >
@@ -32,9 +32,14 @@
                         {{ session('status') }}
                     </div>
                 @endif
+                @if (session('danger'))
+                    <div class ="alert alert-danger">
+                        {{ session('danger') }}
+                    </div>
+                @endif
                 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                 <fieldset>
-                    <legend>Registre Entrada / Sortida</legend>
+                    <legend>REGISTRE HORARIS LERIGRAF</legend>
                     <div class ="form-group">
                         <div class ="col-lg-10 col-lg-offset-2">
                           <span class="badge"><input type="date" class ="form-control" id ="data"
@@ -42,13 +47,13 @@
                           <span class="badge"><input type="time" class ="form-control" id ="hora"
                             name="hora" value="{!! date("H:i", strtotime("now -0100")) !!}" readonly></span>
 
-                          <span class="badge"><input type="password" class ="form-control" id ="dni" name="dni"></span>
+                          <span class="badge"><input type="password" class ="form-control" id ="dni" name="dni" placeholder="DNI 45612389H"></span>
                         </div>
                     </div>
                     <div class ="form-group">
                         <div class ="col-lg-10 col-lg-offset-6">
-                            <button type="submit" class ="btn btn-success">Entrada</button>
-                            <button type="submit" class ="btn btn-warning">Sortida</button>
+                            <button type="submit" name="inout" class ="btn btn-success" value="1" >Entrada</button>
+                            <button type="submit" name="inout" class ="btn btn-warning" value="2">Sortida</button>
                         </div>
                     </div>
                 </fieldset>

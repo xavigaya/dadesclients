@@ -48,8 +48,13 @@ Route::get('/timelogs/{id?}/delete','TimelogsController@destroy');
 Route::get('/timelogs/{team?}/create_equip/', 'TimelogsController@create_equip');
 Route::post('/timelogs/{team?}/create_equip/', 'TimelogsController@store');
 
+// Autoregistre d'horaris
 Route::get('/timelogs/logging', 'TimelogsController@logging');
 Route::post('/timelogs/logging', 'TimelogsController@storelogging');
+
+//Consultes dels registres d'horaris
+Route::get('/timelogs/consulta', 'TimelogsController@setConsulta');
+Route::post('/timelogs/consulta', 'TimelogsController@getConsulta');
 
 
 // RoturesPaper
@@ -58,7 +63,7 @@ Route::get('/rotures/create', 'RoturesPaperController@create');
 Route::post('/rotures/create', 'RoturesPaperController@store');
 
 
-// RoturesPaper
+// ControlPH
 Route::get('/controlph', 'ControlPhController@index');
 Route::get('/controlph/nevera3', 'ControlPhController@nevera3');
 Route::get('/controlph/create', 'ControlPhController@create');

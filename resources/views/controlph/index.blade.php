@@ -33,8 +33,8 @@
                     <thead>
                         <tr>
                             <th colspan="2">Lectures</th>
-                            <th colspan="3">Nevera 1</th>
-                            <th colspan="3">Nevera 2</th>
+                            <th colspan="3">Nevera 1 (Heatset)</th>
+                            <th colspan="3">Nevera 2 (Coldset)</th>
                             <th colspan="3">Origen</th>
                         </tr>
                         <tr>

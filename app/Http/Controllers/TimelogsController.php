@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\TimelogsFormRequest;
 use App\Http\Requests\TimelogsSearchFormRequest;
+use App\Http\Requests\TimelogsConsultaFormRequest;
 use App\Timelog;
 use App\Worker;
 use DB;
@@ -87,8 +88,9 @@ class TimelogsController extends Controller
   }
 
   /**
+  * List of today working timetable
   *
-  *
+  * @return list view
   **/
   public function indextoday()
   {
@@ -102,6 +104,11 @@ class TimelogsController extends Controller
   }
 
 
+
+  /**
+  * Edit form to modify a register
+  *
+  **/
   public function edit($id)
   {
       $timelogs = Timelog::whereId($id)->get();
@@ -110,6 +117,11 @@ class TimelogsController extends Controller
   }
 
 
+  
+  /**
+  * Update a register data
+  *
+  **/
   public function update(TimelogsFormRequest $request)
   {
     $timelog = Timelog::whereId($request->get('id'))->firstOrFail();
@@ -136,7 +148,10 @@ class TimelogsController extends Controller
     return redirect('/timelogs')-> with ('status', 'El registre '.$request->get('id').' ha estat modificat!');
   }
 
-
+  /**
+  * Creating a team
+  *
+  **/
   public function create_equip($team)
   {
     $timelog = Timelog::all();
@@ -144,14 +159,10 @@ class TimelogsController extends Controller
     return view('timelogs.create_equip'.$team, compact('workers'));
   }
 
-
-  public function logging()
-  {
-    //$workers = Worker::all()->where('equip', '1');
-    return view('timelogs.logging');
-  }
-
-
+  /**
+  * Save input data form
+  *
+  **/
   public function store(TimelogsFormRequest $request)
   {
     $dades = array();
@@ -202,7 +213,7 @@ class TimelogsController extends Controller
       }
       if ($dada['entrada'] == '16:15')
       {
-        $sortida = '22:45';
+        $sortida = '23:30';
       }
       elseif ($dada['entrada'] == '11:30')
       {
@@ -241,20 +252,117 @@ class TimelogsController extends Controller
     return redirect()->back()-> with ('status', 'Els registres s\'han afegit!')->withInput();
   }
 
+
+  /**
+    * Input form for registering 
+    *
+  **/
+  public function logging()
+  {
+    return view('timelogs.logging');
+  }
+    
+  /**
+    * Guardar els valors del formulari de chek-in / check-out
+    * Controlar si és entrada o sortida
+    * Controlar si l'usuari existeix
+    * Controlar que toca entrar o sortir
+    * @return estat del registre
+  **/
   public function storelogging(TimelogsFormRequest $request)
   {
-    $worker = Worker::all()->where('dni', $request->get('dni'));
-    $timelog = new Timelog(array(
-          'data' => $request->get('data'),
-          'dni' => $request->get('dni'),
-          'entrada' => $request->get('hora'),
-      ));
-      $timelog->save();
-
-    return redirect()->back()-> with ('status', 'El registre s\'ha afegit!');
+      $worker = Worker::whereDni($request->get('dni'))->first();
+      $timelog = Timelog::whereDni($request->get('dni'))->orderBy('id', 'desc')->first();
+      
+      if (($worker != null) && ($timelog->sortida == 0) && 
+          ($timelog->festa == 0) && ($timelog->vacances == 0) && 
+          ($timelog->baixa == 0) && ($timelog->permis == 0) && ($request->get('inout') == 2))
+      {
+          $timelog->sortida = $request->get('hora');
+          $timelog->festa = 0;
+          $timelog->vacances = 0;
+          $timelog->baixa = 0;
+          $timelog->save();
+          
+          $data = date('d/m/y', strtotime($request->get('data')));
+          
+          return redirect()->back()->with('status', $worker->nom.', has registrat la teva SORTIDA el '.
+                                          $data.' a les: '.$request->get('hora'));
+      } 
+      elseif (($worker != null) && ($request->get('inout') == 1)) 
+      {
+        $timelog = new Timelog(array(
+            'data' => $request->get('data'),
+            'dni' => $request->get('dni'),
+            'entrada' => $request->get('hora'),
+            'sortida' => null,
+            'festa' => 0,
+            'vacances' => 0,
+            'baixa' => 0,
+        ));
+        $timelog->save();
+          
+        $data = date('d/m/y', strtotime($request->get('data')));
+          
+        return redirect()->back()->with('status', $worker->nom.', has registrat la teva ENTRADA el '.
+                                          $data.' a les: '.$request->get('hora'));
+      }
+      else 
+      {
+          return redirect()->back()->with('danger', 'DNI incorrecte / No has fitxat al entrar');
+      }
   }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  /**
+    * Consulta horas treballades per treballador entre dues dates donades
+    *
+    * @return view with a list and sum of worked hours
+  **/
+  public function setConsulta()
+  {
+      $workers = Worker::orderBy('nom')->get();
+      return view('timelogs.consulta', compact('workers'));
+  }
+    
+  /**
+    * Shows a list of days and sum of hours of a workers
+    *
+    *
+  **/
+  public function getConsulta(TimelogsConsultaFormRequest $request)
+  {
+      //$timelogs = Timelog::whereId($request->get('workerid'))->where('data', '>=', $request->get('inici'));
+      $timelogs = Timelog::all();
+      
+      return view('timelogs.showconsulta', compact('timelogs'));
+  }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  /**
+    * Delete a registrer ID
+    *
+  **/
   public function destroy($id)
   {
       $timelog = Timelog::whereId($id)->firstOrFail();

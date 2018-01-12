@@ -28,6 +28,10 @@
             <a href="http://10.213.6.29:8180/birt25/frameset?__report=report/timelogs/TimelogsLerigrafMesv1.rptdesign"
               target="_blank">Generar Llistats</a>
         </span>
+        <span class="badge">
+            <a href="http://10.213.6.29:8180/birt25/frameset?__report=report/timelogs/TimelogsLerigrafSetmanalXTornv2.rptdesign"
+              target="_blank">Llistats Setmanals</a>
+        </span>
       </div>
       <div class="col-lt-10">
         &nbsp;
