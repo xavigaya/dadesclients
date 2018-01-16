@@ -95,11 +95,10 @@
                           </td>
                           <td>
                             {!! $timelog->observacions !!}
+                            
                           </td>
                           <td>
-                              
                             <a href="/timelogs/{!! $timelog->id !!}/edit">
-                                <i class="icon-trash"></i>
                               <img src="/img/edit.png" alt="Editar" title="Editar" height="15px">
                             </a>
                           </td>

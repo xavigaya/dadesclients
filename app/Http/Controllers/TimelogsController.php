@@ -359,7 +359,9 @@ class TimelogsController extends Controller
                                 ['dni', '=', $request->get('dni')],
                                 ['data', '>=', date('Y-m-d', strtotime($request->get('datainici')))],
                                 ['data', '<=', date('Y-m-d', strtotime($request->get('datafi')))],
-                            ])->get();
+                            ])
+                        ->orderBy('data')
+                        ->get();
 
       $workers = Worker::where('equip', '<>', '0')->orderBy('nom')->get();
       foreach ($workers as $worker)
