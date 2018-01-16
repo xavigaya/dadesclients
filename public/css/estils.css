@@ -3,17 +3,17 @@
 }
 
 .taula {
-    font-size: 90%;
+    font-size: 85%;
     text-align: center;
 }
 
 th {
     text-align: center;
-    background-color:skyblue;
+    background-color:lightblue;
 }
 
 tr:nth-child(even) {
-    background-color:#dde;
+    background-color:lightsteelblue;
 }
 
 label input {

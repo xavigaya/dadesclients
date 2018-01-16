@@ -28,37 +28,43 @@ Route::group(array('prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 
   Route::get('users', 'UsersController@index');
 });
 
-//Timelogs
+// Treballadors
 Route::get('/workers', 'WorkersController@index');
 Route::get('/workers/create', 'WorkersController@create');
 Route::post('/workers/create', 'WorkersController@store');
 
+//Equips
 Route::get('/teams', 'TeamsController@index');
 Route::get('/teams/create', 'TeamsController@create');
 Route::post('/teams/create', 'TeamsController@store');
 
+//Timelogs
 Route::get('/timelogs', 'TimelogsController@index');
 Route::post('/timelogs', 'TimelogsController@search');
 Route::get('/timelogs/today', 'TimelogsController@indextoday');
-//Route::get('/timelogs/{date?}/{team?}/show', 'TimelogsController@search2');
-//Route::post('/timelogs/{date?}/{team?}', 'TimelogsController@update');
+/**
+Route::get('/timelogs/{date?}/{team?}/show', 'TimelogsController@search2');
+Route::post('/timelogs/{date?}/{team?}', 'TimelogsController@update');
+**/
 Route::get('/timelogs/{id?}/edit', 'TimelogsController@edit');
 Route::post('/timelogs/{id?}/edit', 'TimelogsController@update');
 Route::get('/timelogs/{id?}/delete','TimelogsController@destroy');
 Route::get('/timelogs/{team?}/create_equip/', 'TimelogsController@create_equip');
 Route::post('/timelogs/{team?}/create_equip/', 'TimelogsController@store');
 
+
 // Autoregistre d'horaris
 Route::get('/timelogs/logging', 'TimelogsController@logging');
 Route::post('/timelogs/logging', 'TimelogsController@storelogging');
 
+//Consultes dels registres d'horaris per Treballador i interval dies
+Route::get('/timelogs/consulta/treballadordia', 'TimelogsController@setConsultaTreballadorDies');
+Route::post('/timelogs/consulta/treballadordia', 'TimelogsController@getConsultaTreballadorDies');
 
-
-
-//Consultes dels registres d'horaris
+//Consultes dels registres d'horaris per Equip i dia
 Route::get('/timelogs/consulta', 'TimelogsController@setConsulta');
 Route::post('/timelogs/consulta', 'TimelogsController@getConsulta');
-//Route::get('/timelogs/showconsulta', 'TimelogsController@getConsulta');
+
 
 
 

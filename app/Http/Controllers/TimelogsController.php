@@ -154,7 +154,7 @@ class TimelogsController extends Controller
     $timelog->observacions = $request->get('observacions');
     $timelog->save();
 
-    return redirect('/timelogs')-> with ('status', 'El registre '.$request->get('id').' ha estat modificat!');
+    return  redirect()->back()-> with ('status', 'El registre '.$request->get('id').' ha estat modificat!'); 
   }
 
     
@@ -337,23 +337,40 @@ class TimelogsController extends Controller
     *
     * @return view with a list and sum of worked hours
   **/
-  public function setConsulta()
+  public function setConsultaTreballadorDies()
   {
-      $workers = Worker::orderBy('nom')->get();
-      return view('timelogs.consulta', compact('workers'));
+      $workers = Worker::where('equip', '<>', '0')->orderBy('nom')->get();
+      return view('timelogs.conTrebDia', compact('workers'));
   }
+
     
   /**
     * Gets a list of days and sum of hours of a worker
     *
     *
   **/
-  public function getConsulta(TimelogsConsultaFormRequest $request)
+  public function getConsultaTreballadorDies(TimelogsConsultaFormRequest $request)
   {
-      //$timelogs = Timelog::whereId($request->get('workerid'))->where('data', '>=', $request->get('inici'));
-      $timelogs = Timelog::all();
-      $workers = Worker::orderBy('nom')->get();
-      return view('timelogs.consulta')->with(compact('timelogs', 'workers'));
+      /**
+      $inici = date('Y-m-d', strtotime($request->get('datainici')));
+      $fi = date('Y-m-d', strtotime($request->get('datafi')));
+      **/      
+      $timelogs = Timelog::where([
+                                ['dni', '=', $request->get('dni')],
+                                ['data', '>=', date('Y-m-d', strtotime($request->get('datainici')))],
+                                ['data', '<=', date('Y-m-d', strtotime($request->get('datafi')))],
+                            ])->get();
+
+      $workers = Worker::where('equip', '<>', '0')->orderBy('nom')->get();
+      foreach ($workers as $worker)
+      {
+          if ($worker->dni == $request->get('dni'))
+          {
+              $info = $worker->dni.' -- '.$worker->nom.' '.$worker->cognoms;
+          }
+      }
+      
+      return view('timelogs.conTrebDia')->with(compact('timelogs', 'workers', 'info'));
   }
 
  
