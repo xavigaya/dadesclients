@@ -1,5 +1,5 @@
 @extends('master')
-@section('title', 'Consulta Horaris')
+@section('title', 'Consulta Horaris de Treball')
 @section('content')
     <div class ="container col-md-10 col-md-offset-1">
         <div class ="well well bs-component">
@@ -19,28 +19,21 @@
                 @endif
                 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                 <fieldset>
-                    <legend>CONSULTA HORARIS</legend>
-                    <div class ="form-group">
-                        <div class ="col-lg-12 ">
-                            <div class ="col-md-4">
-                                <select class="form-control" name="dni">
-                                    @foreach ($workers as $person)
-                                        <option value="{!! $person->dni !!}">{!! $person->nom,' ',$person->cognoms !!}</option>
+                    <legend>CONSULTA HORARIS DE TREBALL</legend>
+                    <div class ="form-group col-lg-12">
+                            <div class ="col-md-3">
+                                <select class="form-control" name="id">
+                                    @foreach ($teams as $team)
+                                        <option value="{!! $team->id !!}">{!! $team->nom !!}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class ="col-md-3">
-                                <input type="date" class ="form-control" id ="datainici" name="datainici" required>
-                                <span class="help-block">Data Inici</span>
+                                <input type="date" class ="form-control" id ="data" name="data" value="{{ date('Y-m-d', strtotime( old('data').' + 0 days')) }}" required>
                             </div>
                             <div class ="col-md-3">
-                                <input type="date" class ="form-control" id ="datafi" name="datafi" required>
-                                <span class="help-block">Data Final</span>
+                                <button type="submit" class ="btn btn-success" >Consultar</button>
                             </div>
-                            <div class ="col-md-2">
-                                <button type="submit" class ="btn btn-mini btn-success" >Consultar</button>
-                            </div>
-                        </div>    
                     </div>
                 </fieldset>
             </form>
@@ -52,12 +45,11 @@
             </div>
         @else
             <div class ="well well bs-component">
-                <label>{!! $info !!}</label>
+                <label>{!! $nom !!}</label>
                 <table class="table taula table-condensed">
                 <thead>
                   <tr>
-                    <th class="col-md-1">#</th>
-                    <th class="col-md-1">Data</th>
+                    <th class="col-md-1">Nom</th>
                     <th class="col-md-1">Entrada</th>
                     <th class="col-md-1">Sortida</th>
                     <th class="col-md-1">Festa</th>
@@ -69,14 +61,10 @@
                   </tr>
                 </thead>
                 <tbody class="text-center">
-                  <!-- {!! $i = 1 !!} -->
                   @foreach($timelogs as $timelog)
                       <tr >
                           <td>
-                              {!! $i++ !!}
-                          </td>
-                          <td>
-                            {!! date('d/m/y', strtotime( $timelog->data )) !!}
+                            {!! $timelog->nom.' '.$timelog->cognoms !!}
                           </td>
                           <td>
                             {!! $timelog->entrada !!}

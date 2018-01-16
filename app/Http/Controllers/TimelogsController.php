@@ -10,6 +10,7 @@ use App\Http\Requests\TimelogsSearchFormRequest;
 use App\Http\Requests\TimelogsConsultaFormRequest;
 use App\Timelog;
 use App\Worker;
+use App\Team;
 use DB;
 
 class TimelogsController extends Controller
@@ -58,8 +59,6 @@ class TimelogsController extends Controller
                         ->simplePaginate(10);
     }
     return view('timelogs.index', compact('timelogs'));
-    //return view('timelogs.teamedit', compact('timelogs', 'data'));
-    //return redirect('/timelogs/'.$data.'/'.$equip);
   }
 
     
@@ -350,11 +349,7 @@ class TimelogsController extends Controller
     *
   **/
   public function getConsultaTreballadorDies(TimelogsConsultaFormRequest $request)
-  {
-      /**
-      $inici = date('Y-m-d', strtotime($request->get('datainici')));
-      $fi = date('Y-m-d', strtotime($request->get('datafi')));
-      **/      
+  { 
       $timelogs = Timelog::where([
                                 ['dni', '=', $request->get('dni')],
                                 ['data', '>=', date('Y-m-d', strtotime($request->get('datainici')))],
@@ -376,6 +371,54 @@ class TimelogsController extends Controller
   }
 
  
+
+  /**
+    * Consulta horari de treball per equip i dia
+    *
+    * @return a list of timetable daily
+  **/
+  public function setConsultaEquipDia()
+  {
+      $teams = Team::orderBy('nom')->get();
+      return view('timelogs.conEquipDia', compact('teams'));
+  }
+
+    
+  /**
+    * Gets a list of days and sum of hours of a worker
+    *
+    *
+  **/
+  public function getConsultaequipDia(TimelogsConsultaFormRequest $request)
+  {               
+    $teams = Team::orderBy('nom')->get();
+    foreach ($teams as $team)
+    {
+      if ($team->id == $request->get('id'))
+      {
+          $nom = $team->nom.' - '.date('d/m/y', strtotime( $request->get('data') ));
+          $equip = $team->id;
+      }
+    }
+
+    $workers = Worker::where('id', $request->get('id'));
+      
+    $timelogs = Timelog::join('workers', 'timelogs.dni', '=', 'workers.dni')
+                    ->where('workers.equip', $equip)
+                    ->where('timelogs.data', $request->get('data'))
+                    ->select('timelogs.*', 'workers.nom', 'workers.cognoms', 'workers.id as idworker')
+                    ->get();      
+
+    return view('timelogs.conEquipDia')->with(compact('timelogs', 'workers', 'teams', 'nom'));
+  }    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
