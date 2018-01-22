@@ -17,7 +17,7 @@
         @if($timelogs->isEmpty())
           <p>No hi ha cap registre </p>
         @else
-          <table class="table">
+          <table class="table taula table-condensed">
             <thead>
               <tr>
                 <th>#</th>
@@ -29,6 +29,7 @@
                 <th class="col-md-1">Festa</th>
                 <th class="col-md-1">Vacances</th>
                 <th class="col-md-1">Baixa</th>
+                <th class="col-md-1">Observacions</th>
                 <th class="col-md-1">Editar</th>
                 <th class="col-md-1">Borrar</th>
               </tr>
@@ -63,6 +64,9 @@
                       </td>
                       <td>
                         {!! $timelog->baixa !!}
+                      </td>
+                      <td>
+                        {!! $timelog->observacions !!}
                       </td>
                       <td>
                         <a href="/timelogs/{!! $timelog->id !!}/edit">

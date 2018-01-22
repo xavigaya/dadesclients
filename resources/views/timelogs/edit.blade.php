@@ -20,17 +20,18 @@
           @if($timelogs->isEmpty())
               <p>No hi ha cap registre</p>
           @else
-              <table class="table col-md-12">
+              <table class="table col-md-12 taula table-condensed">
                   <thead>
                       <tr>
-                          <th class="col-md-1">Data</th>
-                          <th class="col-md-2">DNI</th>
-                          <th class="col-md-3">Nom</th>
-                          <th class="col-md-1">Entrada</th>
-                          <th class="col-md-1">Sortida</th>
+                          <th class="col-md-2 text-left">Data</th>
+                          <th class="col-md-2 text-left">DNI</th>
+                          <th class="col-md-2 text-left">Nom</th>
+                          <th class="col-md-1 text-left">Entrada</th>
+                          <th class="col-md-1 text-left">Sortida</th>
                           <th class="col-md-1">Festa</th>
                           <th class="col-md-1">Vacances</th>
                           <th class="col-md-1">Baixa</th>
+                          <th class="col-md-3 text-left">Observacions</th>
                           <th class="col-md-1">Borrar</th>
                       </tr>
                   </thead>
@@ -39,15 +40,15 @@
                       <input type="hidden" class ="form-control" id ="id"
                         value="{!! $timelog->id !!}" name="id">
                       <tr >
-                          <td>
-                            <input type="date" class ="form-control" id ="data"
-                            value="{!! $timelog->data !!}" name="data" readonly>
+                          <td class="col-md-2">
+                            <input type="date" class="form-control" id ="data"
+                            value="{!! $timelog->data !!}" name="data"  readonly>
                           </td>
-                          <td>
+                          <td class="col-md-2">
                             <input type="text" class ="form-control" id ="dni"
                             value="{!! $timelog->dni !!}" readonly name="dni" >
                           </td>
-                          <td class="text-left">
+                          <td class="col-md-3 text-left">
                             @foreach($workers as $worker)
                               @if($worker->dni == $timelog->dni)
                                 <input type="text" class ="form-control" id ="nom"
@@ -56,15 +57,15 @@
                               @endif
                             @endforeach
                           </td>
-                          <td>
+                          <td class="col-md-1">
                             <input type="text" class ="form-control" id ="entrada"
                             value="{!! $timelog->entrada !!}" name="entrada">
                           </td>
-                          <td>
+                          <td class="col-md-1">
                             <input type="text" class ="form-control" id ="sortida"
                             value="{!! $timelog->sortida !!}" name="sortida">
                           </td>
-                          <td>
+                          <td class="col-md-1">
                             @if($timelog->festa == 1)
                               <input type="hidden" class ="form-control" id ="festa"
                                 name="festa" value="0">
@@ -77,7 +78,7 @@
                                 name="festa" value="1">
                             @endif
                           </td>
-                          <td>
+                          <td class="col-md-1">
                             @if($timelog->vacances == 1)
                               <input type="hidden" class ="form-control" id ="vacances"
                                 name="vacances" value="0">
@@ -90,7 +91,7 @@
                                 name="vacances" value="1">
                             @endif
                           </td>
-                          <td>
+                          <td class="col-md-1">
                             @if($timelog->baixa == 1)
                               <input type="hidden" class ="form-control" id ="baixa"
                                 name="baixa" value="0">
@@ -103,7 +104,11 @@
                                 name="baixa" value="1">
                             @endif
                           </td>
-                          <td>
+                          <td class="col-md-3">
+                            <input type="text" class ="form-control" id ="observacions"
+                            value="{!! $timelog->observacions !!}" name="observacions">
+                          </td>
+                          <td class="col-md-1">
                             <a href="/timelogs/{!! $timelog->id !!}/delete">
                               <img src="/img/trash.png" alt="Editar" title="Editar" height="20px">
                             </a>

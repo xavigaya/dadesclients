@@ -391,7 +391,9 @@ class TimelogsController extends Controller
   **/
   public function getConsultaequipDia(TimelogsConsultaFormRequest $request)
   {               
-    $teams = Team::orderBy('nom')->get();
+    
+    $teams = Team::orderBy('id')->get();
+    $data = $request->get('data');
     foreach ($teams as $team)
     {
       if ($team->id == $request->get('id'))
@@ -400,7 +402,9 @@ class TimelogsController extends Controller
           $equip = $team->id;
       }
     }
-
+      
+        
+    /**
     $workers = Worker::where('id', $request->get('id'));
       
     $timelogs = Timelog::join('workers', 'timelogs.dni', '=', 'workers.dni')
@@ -408,8 +412,27 @@ class TimelogsController extends Controller
                     ->where('timelogs.data', $request->get('data'))
                     ->select('timelogs.*', 'workers.nom', 'workers.cognoms', 'workers.id as idworker')
                     ->get();      
+    
+    **/
+    
+    /**
+    $workers = Worker::where('workers.equip', $request->get('id'))
+                ->rightjoin('timelogs', 'timelogs.dni', '=', 'workers.dni')
+                ->where('timelogs.data', $request->get('data'))
+                ->get();
+    **/
 
-    return view('timelogs.conEquipDia')->with(compact('timelogs', 'workers', 'teams', 'nom'));
+    $workers = Worker::where('workers.equip', $request->get('id'))->get();
+
+    $timelogs = Timelog::join('workers', 'timelogs.dni', '=', 'workers.dni')
+                    ->where('workers.equip', $equip)
+                    ->where('timelogs.data', $request->get('data'))
+                    ->select('timelogs.*', 'workers.nom', 'workers.cognoms', 'workers.id as idworker')
+                    ->get();      
+
+    
+    return view('timelogs.conEquipDia')->with(compact('workers', 'timelogs', 'teams', 'nom', 'data'));
+    //return view('timelogs.conEquipDia')->with(compact('timelogs', 'workers', 'teams', 'nom'));
   }    
     
     

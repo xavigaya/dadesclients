@@ -20,6 +20,6 @@ class Worker extends Model
   }
 
   public function timelogs() {
-      return $this->hasmany('App\Timelog', 'dni');
+      return $this->hasmany('App\Timelog', 'dni', 'dni');
   }
 }

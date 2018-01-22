@@ -39,7 +39,7 @@
             </form>
         </div>
         
-        @if ( empty($timelogs))
+        @if ( empty($workers))
             <div class ="well well bs-component">
                 No hi ha registres per mostrar
             </div>
@@ -49,54 +49,55 @@
                 <table class="table taula table-condensed">
                 <thead>
                   <tr>
-                    <th class="col-md-1">Nom</th>
+                    <th class="col-md-2">Nom</th>
                     <th class="col-md-1">Entrada</th>
                     <th class="col-md-1">Sortida</th>
                     <th class="col-md-1">Festa</th>
                     <th class="col-md-1">Vacances</th>
                     <th class="col-md-1">Baixa</th>
-                    <th class="col-md-3">Observacions</th>
-                    <th class="col-md-1">Editar</th>
-                    <th class="col-md-1">Borrar</th>
+                    <th class="col-md-5">Observacions</th>
+                    <th class="">Editar</th>
+                    <th class="">Borrar</th>
                   </tr>
                 </thead>
                 <tbody class="text-center">
-                  @foreach($timelogs as $timelog)
-                      <tr >
-                          <td>
-                            {!! $timelog->nom.' '.$timelog->cognoms !!}
-                          </td>
-                          <td>
-                            {!! $timelog->entrada !!}
-                          </td>
-                          <td>
-                            {!! $timelog->sortida !!}
-                          </td>
-                          <td>
-                            {!! $timelog->festa !!}
-                          </td>
-                          <td>
-                            {!! $timelog->vacances !!}
-                          </td>
-                          <td>
-                            {!! $timelog->baixa !!}
-                          </td>
-                          <td>
-                            {!! $timelog->observacions !!}
-                            
-                          </td>
-                          <td>
-                            <a href="/timelogs/{!! $timelog->id !!}/edit">
-                              <img src="/img/edit.png" alt="Editar" title="Editar" height="15px">
-                            </a>
-                          </td>
-                          <td>
-                            <a href="/timelogs/{!! $timelog->id !!}/delete">
-                              <img src="/img/trash.png" alt="Editar" title="Editar" height="15px">
-                            </a>
-                          </td>
-                      </tr>
-                    @endforeach
+                    @foreach($timelogs as $timelog)
+                          <tr >
+                              <td>
+                                {!! $timelog->nom.' '.$timelog->cognoms !!}
+                              </td>
+                              <td>
+                                {!! $timelog->entrada !!}
+                              </td>
+                              <td>
+                                {!! $timelog->sortida !!}
+                              </td>
+                              <td>
+                                {!! $timelog->festa !!}
+                              </td>
+                              <td>
+                                {!! $timelog->vacances !!}
+                              </td>
+                              <td>
+                                {!! $timelog->baixa !!}
+                              </td>
+                              <td>
+                                {!! $timelog->observacions !!}
+                              </td>
+                              <td>
+                                <a href="/timelogs/{!! $timelog->id !!}/edit">
+                                    <i class="glyphicon glyphicon-pencil"></i>
+                                </a>
+                              </td>
+                              <td>
+                                <a href="/timelogs/{!! $timelog->id !!}/delete">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                </a>
+                              </td>
+                          </tr>
+
+
+                  @endforeach
                 </tbody>
               </table>
             </div>

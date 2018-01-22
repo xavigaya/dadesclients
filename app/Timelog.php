@@ -11,7 +11,7 @@ class Timelog extends Model
   ];
 
   public function workers() {
-      return $this->hasmany('App\Worker', 'dni');
+      return $this->belongsTo('App\Worker');
   }
 
 }

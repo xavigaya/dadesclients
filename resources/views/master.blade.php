@@ -16,7 +16,7 @@
         -->
         <meta charset="UTF-8">
 
-        {!! Charts::assets() !!}
+        <!--{!! Charts::assets() !!}-->
 
     </head>
     <body>
