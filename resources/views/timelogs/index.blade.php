@@ -70,12 +70,12 @@
                       </td>
                       <td>
                         <a href="/timelogs/{!! $timelog->id !!}/edit">
-                          <img src="/img/edit.png" alt="Editar" title="Editar" height="20px">
+                            <i class="glyphicon glyphicon-pencil"></i>
                         </a>
                       </td>
                       <td>
                         <a href="/timelogs/{!! $timelog->id !!}/delete">
-                          <img src="/img/trash.png" alt="Editar" title="Editar" height="20px">
+                            <i class="glyphicon glyphicon-trash"></i>
                         </a>
                       </td>
                   </tr>

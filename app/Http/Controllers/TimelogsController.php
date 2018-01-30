@@ -22,13 +22,14 @@ class TimelogsController extends Controller
   *
   * @return default view
   **/
-  public function index()
-  {
+  public function index() {
+      
       $timelogs = Timelog::join('workers', 'timelogs.dni', '=', 'workers.dni')
                         ->orderBy('data', 'equip', 'cognoms')
                         ->select('timelogs.*', 'workers.nom', 'workers.cognoms', 'workers.id as idworker')
                         ->simplePaginate(10);
       return view('timelogs.index', compact('timelogs'));
+      
   }
 
     
@@ -38,27 +39,31 @@ class TimelogsController extends Controller
   *
   * @return default view
   **/
-  public function search(TimelogsSearchFormRequest $request)
-  {
+  public function search(TimelogsSearchFormRequest $request) {
+      
     $data = $request->get('data');
     $equip = $request->get('team');
 
-    if ($request->get('team') == 0)
-    {
+    if ($request->get('team') == 0) {
+        
       $timelogs = Timelog::join('workers', 'timelogs.dni', '=', 'workers.dni')
                         ->where('timelogs.data', $data)
                         ->select('timelogs.*', 'workers.nom', 'workers.cognoms', 'workers.id as idworker')
                         ->simplePaginate(50);
+        
     }
-    else
-    {
+    else {
+        
       $timelogs = Timelog::join('workers', 'timelogs.dni', '=', 'workers.dni')
                         ->where('workers.equip', $equip)
                         ->where('timelogs.data', $data)
                         ->select('timelogs.*', 'workers.nom', 'workers.cognoms', 'workers.id as idworker')
                         ->simplePaginate(10);
+        
     }
+      
     return view('timelogs.index', compact('timelogs'));
+      
   }
 
     
@@ -100,15 +105,18 @@ class TimelogsController extends Controller
   *
   * @return list view
   **/
-  public function indextoday()
-  {
+  public function indextoday() {
+      
       $dia = date('Y-m-d', strtotime('today'));
+      
       $timelogs = Timelog::join('workers', 'timelogs.dni', '=', 'workers.dni')
                         ->where('timelogs.data', $dia)
                         ->orderBy('timelogs.data')
                         ->select('timelogs.*', 'workers.nom', 'workers.cognoms', 'workers.id as idworker')
                         ->simplePaginate(10);
+      
       return view('timelogs.index', compact('timelogs'));
+      
   }
 
 
@@ -117,11 +125,14 @@ class TimelogsController extends Controller
   * Edit form to modify a register
   *
   **/
-  public function edit($id)
-  {
+  public function edit($id) {
+      
       $timelogs = Timelog::whereId($id)->get();
+      
       $workers = Worker::all();
+      
       return view('timelogs.edit')->with(compact ('timelogs', 'workers'));
+      
   }
 
 
@@ -130,16 +141,20 @@ class TimelogsController extends Controller
   * Update a register data
   *
   **/
-  public function update(TimelogsFormRequest $request)
-  {
-    $timelog = Timelog::whereId($request->get('id'))->firstOrFail();
+  public function update(TimelogsFormRequest $request) {
+    
+      $timelog = Timelog::whereId($request->get('id'))->firstOrFail();
 
     if ($request->get('festa') || $request->get('vacances') || $request->get('baixa') || $request->get('permis')) {
-      $entrada = null;
-      $sortida = null;
+      
+        $entrada = null;
+      
+        $sortida = null;
+        
     } else {
-      $entrada = $request->get('entrada');
-      $sortida = $request->get('sortida');
+        
+        $entrada = $request->get('entrada');
+        $sortida = $request->get('sortida');
     }
 
     $timelog->data = date('Y-m-d', strtotime($request->get('data')));
@@ -154,6 +169,7 @@ class TimelogsController extends Controller
     $timelog->save();
 
     return  redirect()->back()-> with ('status', 'El registre '.$request->get('id').' ha estat modificat!'); 
+      
   }
 
     
@@ -175,93 +191,120 @@ class TimelogsController extends Controller
   * Save input data form
   *
   **/
-  public function store(TimelogsFormRequest $request)
-  {
-    $dades = array();
+  public function store(TimelogsFormRequest $request) {
+    
+      $dades = array();
 
-    foreach ($request->get('dni') as $key => $value)
-    {
-      $dades[$key] = array('dni'=>$value);
-    }
-    foreach ($request->get('nom') as $key => $value)
-    {
-      $dades[$key] += array('nom'=>$value);
-    }
-    foreach ($request->get('entrada') as $key => $value)
-    {
-      $dades[$key] += array('entrada'=>$value);
-    }
-    foreach ($request->get('sortida') as $key => $value)
-    {
-      $dades[$key] += array('sortida'=>$value);
-    }
-    foreach ($request->get('festa') as $key => $value)
-    {
-      $dades[$key] += array('festa'=>$value);
-    }
-    foreach ($request->get('vacances') as $key => $value)
-    {
-      $dades[$key] += array('vacances'=>$value);
-    }
-    foreach ($request->get('baixa') as $key => $value)
-    {
-      $dades[$key] += array('baixa'=>$value);
-    }
-    foreach ($request->get('permis') as $key => $value)
-    {
-      $dades[$key] += array('permis'=>$value);
-    }
-    foreach ($request->get('observacions') as $key => $value)
-    {
-      $dades[$key] += array('observacions'=>$value);
-    }
-
-    foreach ($dades as $dada)
-    {
-      if ($dada['festa'] || $dada['vacances'] || $dada['baixa'] || $dada['permis'])
-      {
-        $dada['entrada'] = null;
-        $dada['sortida'] = null;
+    
+      foreach ($request->get('dni') as $key => $value) {
+    
+        $dades[$key] = array('dni'=>$value);
+    
       }
-      if ($dada['entrada'] == '16:15')
-      {
-        $sortida = '23:30';
+    
+      foreach ($request->get('nom') as $key => $value) {
+      
+          $dades[$key] += array('nom'=>$value);
+    
       }
-      elseif ($dada['entrada'] == '11:30')
-      {
-        $sortida = '18:00';
+    
+      foreach ($request->get('entrada') as $key => $value) {
+      
+          $dades[$key] += array('entrada'=>$value);
+    
       }
-      elseif ($dada['entrada'] == '12:45')
-      {
-        $sortida = '21:00';
+    
+      foreach ($request->get('sortida') as $key => $value) {
+      
+          $dades[$key] += array('sortida'=>$value);
+    
       }
-      elseif ($dada['entrada'] == '17:00')
-      {
-        $sortida = '01:15';
+    
+      foreach ($request->get('festa') as $key => $value) {
+      
+          $dades[$key] += array('festa'=>$value);
+    
       }
-      elseif ($dada['entrada'] == '20:30')
-      {
-        $sortida = '04:45';
+    
+      foreach ($request->get('vacances') as $key => $value) {
+      
+          $dades[$key] += array('vacances'=>$value);
+    
       }
-      else
-      {
-        $sortida = $dada['sortida'];
+    
+      foreach ($request->get('baixa') as $key => $value) {
+      
+          $dades[$key] += array('baixa'=>$value);
+    
+      }
+    
+      foreach ($request->get('permis') as $key => $value) {
+      
+          $dades[$key] += array('permis'=>$value);
+    
+      }
+    
+      foreach ($request->get('observacions') as $key => $value) {
+      
+          $dades[$key] += array('observacions'=>$value);
+    
       }
 
-      $timelog = new Timelog(array(
-          'data' => $request->get('data'),
-          'dni' => $dada['dni'],
-          'entrada' => $dada['entrada'],
-          'sortida' => $sortida,
-          'festa' => $dada['festa'],
-          'vacances' => $dada['vacances'],
-          'baixa' => $dada['baixa'],
-          'permis' => $dada['permis'],
-          'observacions' => $dada['observacions'],
-      ));
-      $timelog->save();
-    }
-    return redirect()->back()-> with ('status', 'Els registres s\'han afegit!')->withInput();
+      foreach ($dades as $dada) {
+      
+          if ($dada['festa'] || $dada['vacances'] || $dada['baixa'] || $dada['permis']) {
+        
+              $dada['entrada'] = null;
+              $dada['sortida'] = null;
+      
+          }
+          
+          
+          if ($dada['entrada'] == '16:15') {
+        
+              $sortida = '23:30';
+          
+          } elseif ($dada['entrada'] == '11:30') {
+        
+              $sortida = '18:00';
+      
+          } elseif ($dada['entrada'] == '12:45') {
+        
+              $sortida = '21:00';
+      
+          } elseif ($dada['entrada'] == '17:00') {
+        
+              $sortida = '01:15';
+      
+          } elseif ($dada['entrada'] == '20:30') {
+        
+              $sortida = '04:45';
+      
+          } else {
+        
+              $sortida = $dada['sortida'];
+      
+          }
+
+      
+          $timelog = new Timelog(array(
+              'data' => $request->get('data'),
+              'dni' => $dada['dni'],
+              'entrada' => $dada['entrada'],
+              'sortida' => $sortida,
+              'festa' => $dada['festa'],
+              'vacances' => $dada['vacances'],
+              'baixa' => $dada['baixa'],
+              'permis' => $dada['permis'],
+              'observacions' => $dada['observacions'],
+          ));
+      
+          $timelog->save();
+          
+      }
+    
+      return redirect()->back()-> with ('status', 'Els registres s\'han afegit!')->withInput();
+  
   }
 
 
@@ -270,12 +313,12 @@ class TimelogsController extends Controller
     * Input form for registering 
     *
   **/
-  public function logging()
-  {
-    return view('timelogs.logging');
-  }
-
+  public function logging() {
     
+      return view('timelogs.logging');
+  
+  }
+  
     
   /**
     * Guardar els valors del formulari de chek-in / check-out
@@ -284,15 +327,14 @@ class TimelogsController extends Controller
     * Controlar que toca entrar o sortir
     * @return estat del registre
   **/
-  public function storelogging(TimelogsFormRequest $request)
-  {
+  public function storelogging(TimelogsFormRequest $request) {
+      
       $worker = Worker::whereDni($request->get('dni'))->first();
+      
       $timelog = Timelog::whereDni($request->get('dni'))->orderBy('id', 'desc')->first();
       
-      if (($worker != null) && ($timelog->sortida == 0) && 
-          ($timelog->festa == 0) && ($timelog->vacances == 0) && 
-          ($timelog->baixa == 0) && ($timelog->permis == 0) && ($request->get('inout') == 2))
-      {
+      if (($worker != null) && ($timelog->sortida == 0) && ($timelog->festa == 0) && ($timelog->vacances == 0) && ($timelog->baixa == 0) && ($timelog->permis == 0) && ($request->get('inout') == 2)) {
+          
           $timelog->sortida = $request->get('hora');
           $timelog->festa = 0;
           $timelog->vacances = 0;
@@ -303,10 +345,11 @@ class TimelogsController extends Controller
           
           return redirect()->back()->with('status', $worker->nom.', has registrat la teva SORTIDA el '.
                                           $data.' a les: '.$request->get('hora'));
-      } 
-      elseif (($worker != null) && ($request->get('inout') == 1)) 
-      {
-        $timelog = new Timelog(array(
+          
+      } elseif (($worker != null) && ($request->get('inout') == 1)) {
+          
+        
+          $timelog = new Timelog(array(
             'data' => $request->get('data'),
             'dni' => $request->get('dni'),
             'entrada' => $request->get('hora'),
@@ -314,17 +357,18 @@ class TimelogsController extends Controller
             'festa' => 0,
             'vacances' => 0,
             'baixa' => 0,
-        ));
-        $timelog->save();
+          ));
+        
+          $timelog->save();
           
-        $data = date('d/m/y', strtotime($request->get('data')));
+          $data = date('d/m/y', strtotime($request->get('data')));
           
-        return redirect()->back()->with('status', $worker->nom.', has registrat la teva ENTRADA el '.
-                                          $data.' a les: '.$request->get('hora'));
-      }
-      else 
-      {
+          return redirect()->back()->with('status', $worker->nom.', has registrat la teva ENTRADA el '.$data.' a les: '.$request->get('hora'));
+          
+      } else {
+          
           return redirect()->back()->with('danger', 'DNI incorrecte / No has fitxat al entrar');
+          
       }
   }
 
@@ -336,9 +380,10 @@ class TimelogsController extends Controller
     *
     * @return view with a list and sum of worked hours
   **/
-  public function setConsultaTreballadorDies()
-  {
+  public function setConsultaTreballadorDies() {
+      
       $workers = Worker::where('equip', '<>', '0')->orderBy('nom')->get();
+      
       return view('timelogs.conTrebDia', compact('workers'));
   }
 
@@ -348,22 +393,23 @@ class TimelogsController extends Controller
     *
     *
   **/
-  public function getConsultaTreballadorDies(TimelogsConsultaFormRequest $request)
-  { 
+  public function getConsultaTreballadorDies(TimelogsConsultaFormRequest $request) { 
+      
       $timelogs = Timelog::where([
-                                ['dni', '=', $request->get('dni')],
-                                ['data', '>=', date('Y-m-d', strtotime($request->get('datainici')))],
-                                ['data', '<=', date('Y-m-d', strtotime($request->get('datafi')))],
-                            ])
-                        ->orderBy('data')
-                        ->get();
+          ['dni', '=', $request->get('dni')],
+          ['data', '>=', date('Y-m-d', strtotime($request->get('datainici')))],
+          ['data', '<=', date('Y-m-d', strtotime($request->get('datafi')))],
+      ])
+          ->orderBy('data')->get();
 
       $workers = Worker::where('equip', '<>', '0')->orderBy('nom')->get();
-      foreach ($workers as $worker)
-      {
-          if ($worker->dni == $request->get('dni'))
-          {
+      
+      foreach ($workers as $worker) {
+          
+          if ($worker->dni == $request->get('dni')) {
+              
               $info = $worker->dni.' -- '.$worker->nom.' '.$worker->cognoms;
+              
           }
       }
       
@@ -377,9 +423,10 @@ class TimelogsController extends Controller
     *
     * @return a list of timetable daily
   **/
-  public function setConsultaEquipDia()
-  {
+  public function setConsultaEquipDia() {
+      
       $teams = Team::orderBy('nom')->get();
+      
       return view('timelogs.conEquipDia', compact('teams'));
   }
 
@@ -389,50 +436,38 @@ class TimelogsController extends Controller
     *
     *
   **/
-  public function getConsultaequipDia(TimelogsConsultaFormRequest $request)
-  {               
+  public function getConsultaequipDia(TimelogsConsultaFormRequest $request) {               
     
-    $teams = Team::orderBy('id')->get();
-    $data = $request->get('data');
-    foreach ($teams as $team)
-    {
-      if ($team->id == $request->get('id'))
-      {
-          $nom = $team->nom.' - '.date('d/m/y', strtotime( $request->get('data') ));
-          $equip = $team->id;
+      $teams = Team::orderBy('id')->get();
+    
+      $data = $request->get('data');
+      
+      foreach ($teams as $team) {
+          
+          if ($team->id == $request->get('id')) {
+              
+              $nom = $team->nom.' - '.date('d/m/y', strtotime( $request->get('data')));
+              
+              $equip = $team->id;
+              
+          }
+          
       }
-    }
       
-        
-    /**
-    $workers = Worker::where('id', $request->get('id'));
+      $workers = Worker::where('workers.equip', $request->get('id'))->get();
+
+      $timelogs = Timelog::join('workers', 'timelogs.dni', '=', 'workers.dni')
+          ->where('workers.equip', $equip)
+          ->where('timelogs.data', $request->get('data'))
+          ->select('timelogs.*', 'workers.nom', 'workers.cognoms', 'workers.id as idworker')
+          ->get();
       
-    $timelogs = Timelog::join('workers', 'timelogs.dni', '=', 'workers.dni')
-                    ->where('workers.equip', $equip)
-                    ->where('timelogs.data', $request->get('data'))
-                    ->select('timelogs.*', 'workers.nom', 'workers.cognoms', 'workers.id as idworker')
-                    ->get();      
+      $mescla = $timelogs->merge($workers);
+      
+      $hores = $mescla->all();
     
-    **/
-    
-    /**
-    $workers = Worker::where('workers.equip', $request->get('id'))
-                ->rightjoin('timelogs', 'timelogs.dni', '=', 'workers.dni')
-                ->where('timelogs.data', $request->get('data'))
-                ->get();
-    **/
-
-    $workers = Worker::where('workers.equip', $request->get('id'))->get();
-
-    $timelogs = Timelog::join('workers', 'timelogs.dni', '=', 'workers.dni')
-                    ->where('workers.equip', $equip)
-                    ->where('timelogs.data', $request->get('data'))
-                    ->select('timelogs.*', 'workers.nom', 'workers.cognoms', 'workers.id as idworker')
-                    ->get();      
-
-    
-    return view('timelogs.conEquipDia')->with(compact('workers', 'timelogs', 'teams', 'nom', 'data'));
-    //return view('timelogs.conEquipDia')->with(compact('timelogs', 'workers', 'teams', 'nom'));
+      return view('timelogs.conEquipDia')->with(compact('workers', 'timelogs', 'teams', 'nom', 'data', 'hores'));
+      
   }    
     
     
@@ -449,10 +484,13 @@ class TimelogsController extends Controller
     * Delete a registrer ID
     *
   **/
-  public function destroy($id)
-  {
+  public function destroy($id) {
+      
       $timelog = Timelog::whereId($id)->firstOrFail();
+      
       $timelog-> delete();
+      
       return redirect()->back()->with ('status', 'El registre '.$id.' ha estat esborrat!');
+      
   }
 }

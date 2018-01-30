@@ -61,45 +61,25 @@
                   </tr>
                 </thead>
                 <tbody class="text-center">
-                    @foreach($timelogs as $timelog)
-                          <tr >
-                              <td>
-                                {!! $timelog->nom.' '.$timelog->cognoms !!}
-                              </td>
-                              <td>
-                                {!! $timelog->entrada !!}
-                              </td>
-                              <td>
-                                {!! $timelog->sortida !!}
-                              </td>
-                              <td>
-                                {!! $timelog->festa !!}
-                              </td>
-                              <td>
-                                {!! $timelog->vacances !!}
-                              </td>
-                              <td>
-                                {!! $timelog->baixa !!}
-                              </td>
-                              <td>
-                                {!! $timelog->observacions !!}
-                              </td>
-                              <td>
-                                <a href="/timelogs/{!! $timelog->id !!}/edit">
-                                    <i class="glyphicon glyphicon-pencil"></i>
-                                </a>
-                              </td>
-                              <td>
-                                <a href="/timelogs/{!! $timelog->id !!}/delete">
-                                    <i class="glyphicon glyphicon-trash"></i>
-                                </a>
-                              </td>
-                          </tr>
-
-
-                  @endforeach
+                    @foreach($timelogs as $hora)
+                       <tr>
+                          <td>{!! $hora->nom.' '.$hora->cognoms !!}</td>
+                          <td>{!! $hora->entrada !!}</td>
+                          <td>{!! $hora->sortida !!}</td>
+                          <td>{!! $hora->festa !!}</td>
+                          <td>{!! $hora->vacances !!}</td>
+                          <td>{!! $hora->baixa !!}</td>
+                          <td>{!! $hora->observacions !!}</td>
+                          <td><a href="/timelogs/{!! $hora->id !!}/edit">
+                            <i class="glyphicon glyphicon-pencil"></i></a></td>
+                          <td><a href="/timelogs/{!! $hora->id !!}/delete">
+                            <i class="glyphicon glyphicon-trash"></i></a></td>
+                        </tr>
+                    @endforeach
                 </tbody>
               </table>
+                {!! dump($hores) !!}
+                {!! dump($timelogs) !!}
             </div>
         @endif
     </div>

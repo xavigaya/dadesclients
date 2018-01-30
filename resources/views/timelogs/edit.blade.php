@@ -20,7 +20,7 @@
           @if($timelogs->isEmpty())
               <p>No hi ha cap registre</p>
           @else
-              <table class="table col-md-12 taula table-condensed">
+              <table class="table  taula table-condensed">
                   <thead>
                       <tr>
                           <th class="col-md-2 text-left">Data</th>
@@ -110,7 +110,7 @@
                           </td>
                           <td class="col-md-1">
                             <a href="/timelogs/{!! $timelog->id !!}/delete">
-                              <img src="/img/trash.png" alt="Editar" title="Editar" height="20px">
+                              <i class="glyphicon glyphicon-trash"></i>
                             </a>
                           </td>
                       </tr>
