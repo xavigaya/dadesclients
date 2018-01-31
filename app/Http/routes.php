@@ -56,6 +56,7 @@ Route::post('/timelogs/{team?}/create_equip/', 'TimelogsController@store');
 // Autoregistre d'horaris
 Route::get('/timelogs/logging', 'TimelogsController@logging');
 Route::post('/timelogs/logging', 'TimelogsController@storelogging');
+Route::post('/timelogs/logging/create', 'TimelogsController@create');
 
 //Consultes dels registres d'horaris per Treballador i interval dies
 Route::get('/timelogs/consulta/treballadordia', 'TimelogsController@setConsultaTreballadorDies');

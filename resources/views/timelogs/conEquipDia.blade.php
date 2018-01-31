@@ -39,7 +39,7 @@
             </form>
         </div>
         
-        @if ( empty($workers))
+        @if ( empty($hores))
             <div class ="well well bs-component">
                 No hi ha registres per mostrar
             </div>
@@ -55,31 +55,79 @@
                     <th class="col-md-1">Festa</th>
                     <th class="col-md-1">Vacances</th>
                     <th class="col-md-1">Baixa</th>
+                    <th class="col-md-1">Permís</th>
                     <th class="col-md-5">Observacions</th>
                     <th class="">Editar</th>
                     <th class="">Borrar</th>
                   </tr>
                 </thead>
                 <tbody class="text-center">
-                    @foreach($timelogs as $hora)
+                    @foreach($hores as $hora)
                        <tr>
+                       @if (!empty($hora->entrada || $hora->sortida || $hora->festa || $hora->vacances || $hora->baixa)) 
                           <td>{!! $hora->nom.' '.$hora->cognoms !!}</td>
                           <td>{!! $hora->entrada !!}</td>
                           <td>{!! $hora->sortida !!}</td>
                           <td>{!! $hora->festa !!}</td>
                           <td>{!! $hora->vacances !!}</td>
                           <td>{!! $hora->baixa !!}</td>
+                          <td>{!! $hora->permis !!}</td>
                           <td>{!! $hora->observacions !!}</td>
-                          <td><a href="/timelogs/{!! $hora->id !!}/edit">
+                          <td><a href="/timelogs/{!! $hora->id !!}/edit" target="_blank">
                             <i class="glyphicon glyphicon-pencil"></i></a></td>
-                          <td><a href="/timelogs/{!! $hora->id !!}/delete">
+                           <td><a href="/timelogs/{!! $hora->id !!}/delete" target="_blank">
                             <i class="glyphicon glyphicon-trash"></i></a></td>
+                       @else
+                           <form class ="form-horizontal" method="post">
+                               @foreach ($errors->all() as $error)
+                                    <p class ="alert alert-danger">{{ $error }}</p>
+                                @endforeach
+                                @if (session('status'))
+                                    <div class ="alert alert-success">
+                                        {{ session('status') }}
+                                    </div>
+                                @endif
+                                <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+                                <input type="hidden" class ="form-control" id ="dni" value="{!! $hora->dni !!}" name="dni">
+                                <input type="hidden" class ="form-control" id ="data" value="{!! $data !!}" name="data">
+                               <td>{!! $hora->nom.' '.$hora->cognoms !!}</td>
+                               <td>
+                                   <input type="time" class ="" id ="entrada" name="entrada">
+                               </td>
+                               <td>
+                                   <input type="time" class ="" id ="sortida" name="sortida">
+                               </td>
+                               <td>
+                                   <input type="hidden" class ="" id ="festa" name="festa" value="0">
+                                   <input type="checkbox" class ="" id ="festa" name="festa" value="1">
+                               </td>
+                               <td>
+                                   <input type="hidden" class ="" id ="vacances" name="vacances" value="0">
+                                   <input type="checkbox" class ="" id ="vacances" name="vacances" value="1">
+                               </td>
+                               <td>
+                                   <input type="hidden" class ="" id ="baixa" name="baixa" value="0">
+                                   <input type="checkbox" class ="" id ="baixa" name="baixa" value="1">
+                               </td>
+                               <td>
+                                   <input type="hidden" class ="" id ="permis" name="permis" value="0">
+                                   <input type="checkbox" class ="" id ="permis" name="permis" value="1">
+                               </td>
+                               <td>
+                                   <input type="text" class ="input-sm" id ="observacions" name="observacions">
+                               </td>
+                               <td>&nbsp;</td>
+                           </form>
+                           <td>
+                               <button type="submit" class ="btn btn-primary">
+                                   <i class="glyphicon glyphicon-plus"></i>
+                               </button>
+                           </td>
+                       @endif
                         </tr>
                     @endforeach
                 </tbody>
               </table>
-                {!! dump($hores) !!}
-                {!! dump($timelogs) !!}
             </div>
         @endif
     </div>

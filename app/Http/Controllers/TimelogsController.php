@@ -184,9 +184,9 @@ class TimelogsController extends Controller
     $workers = Worker::all()->where('equip', $team);
     return view('timelogs.create_equip'.$team, compact('workers'));
   }
+    
+    
 
-    
-    
   /**
   * Save input data form
   *
@@ -305,7 +305,7 @@ class TimelogsController extends Controller
     
       return redirect()->back()-> with ('status', 'Els registres s\'han afegit!')->withInput();
   
-  }
+  }    
 
 
     
@@ -454,25 +454,48 @@ class TimelogsController extends Controller
           
       }
       
-      $workers = Worker::where('workers.equip', $request->get('id'))->get();
+      $workers = Worker::where('equip', $request->get('id'))->get();
 
       $timelogs = Timelog::join('workers', 'timelogs.dni', '=', 'workers.dni')
           ->where('workers.equip', $equip)
           ->where('timelogs.data', $request->get('data'))
-          ->select('timelogs.*', 'workers.nom', 'workers.cognoms', 'workers.id as idworker')
           ->get();
       
-      $mescla = $timelogs->merge($workers);
+      $mescla = $workers->except($timelogs->modelKeys('dni'));
       
-      $hores = $mescla->all();
+      $hores = $timelogs->merge($mescla);
     
-      return view('timelogs.conEquipDia')->with(compact('workers', 'timelogs', 'teams', 'nom', 'data', 'hores'));
+      return view('timelogs.conEquipDia')->with(compact('teams', 'nom', 'data', 'hores'));
       
   }    
     
     
     
+  /**
+  * Save input data form
+  *
+  **/
+  public function create(TimelogsFormRequest $request) {
+      
+      vardump($request);
+      
+      $timelog = new Timelog(array(
+          'data' => $request->get('data'),
+          'dni' => $request->get('dni'),
+          'entrada' => $request->get('entrada'),
+          'sortida' => $request->get('sortida'),
+          'festa' => $request->get('festa'),
+          'vacances' => $request->get('vacances'),
+          'baixa' => $request->get('baixa'),
+          'permis' => $request->get('permis'),
+          'observacions' => $request->get('observacions'),
+      ));
+      
+      $timelog->save();
     
+      return redirect()->back()-> with ('status', 'Els registres s\'han afegit!')->withInput();
+  
+  }
     
     
     
