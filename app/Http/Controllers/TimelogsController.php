@@ -459,6 +459,7 @@ class TimelogsController extends Controller
       $timelogs = Timelog::join('workers', 'timelogs.dni', '=', 'workers.dni')
           ->where('workers.equip', $equip)
           ->where('timelogs.data', $request->get('data'))
+          ->select('timelogs.*', 'workers.*', 'timelogs.id as idtimelogs')
           ->get();
       
       $mescla = $workers->except($timelogs->modelKeys('dni'));

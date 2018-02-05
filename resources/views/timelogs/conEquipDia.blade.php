@@ -73,12 +73,12 @@
                           <td>{!! $hora->baixa !!}</td>
                           <td>{!! $hora->permis !!}</td>
                           <td>{!! $hora->observacions !!}</td>
-                          <td><a href="/timelogs/{!! $hora->id !!}/edit" target="_blank">
+                          <td><a href="/timelogs/{!! $hora->idtimelogs !!}/edit" target="_blank">
                             <i class="glyphicon glyphicon-pencil"></i></a></td>
-                           <td><a href="/timelogs/{!! $hora->id !!}/delete" target="_blank">
+                           <td><a href="/timelogs/{!! $hora->idtimelogs !!}/delete" target="_blank">
                             <i class="glyphicon glyphicon-trash"></i></a></td>
                        @else
-                           <form class ="form-horizontal" method="post">
+                           <form class ="form-horizontal" method="get">
                                @foreach ($errors->all() as $error)
                                     <p class ="alert alert-danger">{{ $error }}</p>
                                 @endforeach
@@ -130,5 +130,6 @@
               </table>
             </div>
         @endif
+        {!! dump($hores) !!}
     </div>
 @endsection
