@@ -15,60 +15,60 @@ use DB;
 
 class TimelogsController extends Controller
 {
-    
-    
+
+
   /**
   * Show a list of all the registers in the database
   *
   * @return default view
   **/
   public function index() {
-      
+
       $timelogs = Timelog::join('workers', 'timelogs.dni', '=', 'workers.dni')
                         ->orderBy('data', 'equip', 'cognoms')
                         ->select('timelogs.*', 'workers.nom', 'workers.cognoms', 'workers.id as idworker')
                         ->simplePaginate(10);
       return view('timelogs.index', compact('timelogs'));
-      
+
   }
 
-    
-    
+
+
   /**
   * Show a list of the registers in a date from a team
   *
   * @return default view
   **/
   public function search(TimelogsSearchFormRequest $request) {
-      
+
     $data = $request->get('data');
     $equip = $request->get('team');
 
     if ($request->get('team') == 0) {
-        
+
       $timelogs = Timelog::join('workers', 'timelogs.dni', '=', 'workers.dni')
                         ->where('timelogs.data', $data)
                         ->select('timelogs.*', 'workers.nom', 'workers.cognoms', 'workers.id as idworker')
                         ->simplePaginate(50);
-        
+
     }
     else {
-        
+
       $timelogs = Timelog::join('workers', 'timelogs.dni', '=', 'workers.dni')
                         ->where('workers.equip', $equip)
                         ->where('timelogs.data', $data)
                         ->select('timelogs.*', 'workers.nom', 'workers.cognoms', 'workers.id as idworker')
                         ->simplePaginate(10);
-        
+
     }
-      
+
     return view('timelogs.index', compact('timelogs'));
-      
+
   }
 
-    
-    
-    
+
+
+
   /**
   * Show an editable list of the registers in an
   * specific date from a team passed in the url
@@ -98,25 +98,25 @@ class TimelogsController extends Controller
       return view('timelogs.teamedit', compact('timelogs', 'data', 'equip'));
   }
 
-    
-    
+
+
   /**
   * List of today working timetable
   *
   * @return list view
   **/
   public function indextoday() {
-      
+
       $dia = date('Y-m-d', strtotime('today'));
-      
+
       $timelogs = Timelog::join('workers', 'timelogs.dni', '=', 'workers.dni')
                         ->where('timelogs.data', $dia)
                         ->orderBy('timelogs.data')
                         ->select('timelogs.*', 'workers.nom', 'workers.cognoms', 'workers.id as idworker')
                         ->simplePaginate(10);
-      
+
       return view('timelogs.index', compact('timelogs'));
-      
+
   }
 
 
@@ -126,33 +126,33 @@ class TimelogsController extends Controller
   *
   **/
   public function edit($id) {
-      
+
       $timelogs = Timelog::whereId($id)->get();
-      
+
       $workers = Worker::all();
-      
+
       return view('timelogs.edit')->with(compact ('timelogs', 'workers'));
-      
+
   }
 
 
-  
+
   /**
   * Update a register data
   *
   **/
   public function update(TimelogsFormRequest $request) {
-    
+
       $timelog = Timelog::whereId($request->get('id'))->firstOrFail();
 
     if ($request->get('festa') || $request->get('vacances') || $request->get('baixa') || $request->get('permis')) {
-      
+
         $entrada = null;
-      
+
         $sortida = null;
-        
+
     } else {
-        
+
         $entrada = $request->get('entrada');
         $sortida = $request->get('sortida');
     }
@@ -168,12 +168,12 @@ class TimelogsController extends Controller
     $timelog->observacions = $request->get('observacions');
     $timelog->save();
 
-    return  redirect()->back()-> with ('status', 'El registre '.$request->get('id').' ha estat modificat!'); 
-      
+    return  redirect()->back()-> with ('status', 'El registre '.$request->get('id').' ha estat modificat!');
+
   }
 
-    
-    
+
+
   /**
   * Creating a team
   *
@@ -184,109 +184,109 @@ class TimelogsController extends Controller
     $workers = Worker::all()->where('equip', $team);
     return view('timelogs.create_equip'.$team, compact('workers'));
   }
-    
-    
+
+
 
   /**
   * Save input data form
   *
   **/
   public function store(TimelogsFormRequest $request) {
-    
+
       $dades = array();
 
-    
+
       foreach ($request->get('dni') as $key => $value) {
-    
+
         $dades[$key] = array('dni'=>$value);
-    
+
       }
-    
+
       foreach ($request->get('nom') as $key => $value) {
-      
+
           $dades[$key] += array('nom'=>$value);
-    
+
       }
-    
+
       foreach ($request->get('entrada') as $key => $value) {
-      
+
           $dades[$key] += array('entrada'=>$value);
-    
+
       }
-    
+
       foreach ($request->get('sortida') as $key => $value) {
-      
+
           $dades[$key] += array('sortida'=>$value);
-    
+
       }
-    
+
       foreach ($request->get('festa') as $key => $value) {
-      
+
           $dades[$key] += array('festa'=>$value);
-    
+
       }
-    
+
       foreach ($request->get('vacances') as $key => $value) {
-      
+
           $dades[$key] += array('vacances'=>$value);
-    
+
       }
-    
+
       foreach ($request->get('baixa') as $key => $value) {
-      
+
           $dades[$key] += array('baixa'=>$value);
-    
+
       }
-    
+
       foreach ($request->get('permis') as $key => $value) {
-      
+
           $dades[$key] += array('permis'=>$value);
-    
+
       }
-    
+
       foreach ($request->get('observacions') as $key => $value) {
-      
+
           $dades[$key] += array('observacions'=>$value);
-    
+
       }
 
       foreach ($dades as $dada) {
-      
+
           if ($dada['festa'] || $dada['vacances'] || $dada['baixa'] || $dada['permis']) {
-        
+
               $dada['entrada'] = null;
               $dada['sortida'] = null;
-      
-          }
-          
-          
-          if ($dada['entrada'] == '16:15') {
-        
-              $sortida = '23:30';
-          
-          } elseif ($dada['entrada'] == '11:30') {
-        
-              $sortida = '18:00';
-      
-          } elseif ($dada['entrada'] == '12:45') {
-        
-              $sortida = '21:00';
-      
-          } elseif ($dada['entrada'] == '17:00') {
-        
-              $sortida = '01:15';
-      
-          } elseif ($dada['entrada'] == '20:30') {
-        
-              $sortida = '04:45';
-      
-          } else {
-        
-              $sortida = $dada['sortida'];
-      
+
           }
 
-      
+
+          if ($dada['entrada'] == '16:15') {
+
+              $sortida = '23:30';
+
+          } elseif ($dada['entrada'] == '11:30') {
+
+              $sortida = '18:00';
+
+          } elseif ($dada['entrada'] == '12:45') {
+
+              $sortida = '21:00';
+
+          } elseif ($dada['entrada'] == '17:00') {
+
+              $sortida = '01:15';
+
+          } elseif ($dada['entrada'] == '20:30') {
+
+              $sortida = '04:45';
+
+          } else {
+
+              $sortida = $dada['sortida'];
+
+          }
+
+
           $timelog = new Timelog(array(
               'data' => $request->get('data'),
               'dni' => $dada['dni'],
@@ -298,28 +298,28 @@ class TimelogsController extends Controller
               'permis' => $dada['permis'],
               'observacions' => $dada['observacions'],
           ));
-      
+
           $timelog->save();
-          
+
       }
-    
+
       return redirect()->back()-> with ('status', 'Els registres s\'han afegit!')->withInput();
-  
-  }    
+
+  }
 
 
-    
+
   /**
-    * Input form for registering 
+    * Input form for registering
     *
   **/
   public function logging() {
-    
+
       return view('timelogs.logging');
-  
+
   }
-  
-    
+
+
   /**
     * Guardar els valors del formulari de chek-in / check-out
     * Controlar si és entrada o sortida
@@ -328,27 +328,27 @@ class TimelogsController extends Controller
     * @return estat del registre
   **/
   public function storelogging(TimelogsFormRequest $request) {
-      
+
       $worker = Worker::whereDni($request->get('dni'))->first();
-      
+
       $timelog = Timelog::whereDni($request->get('dni'))->orderBy('id', 'desc')->first();
-      
+
       if (($worker != null) && ($timelog->sortida == 0) && ($timelog->festa == 0) && ($timelog->vacances == 0) && ($timelog->baixa == 0) && ($timelog->permis == 0) && ($request->get('inout') == 2)) {
-          
+
           $timelog->sortida = $request->get('hora');
           $timelog->festa = 0;
           $timelog->vacances = 0;
           $timelog->baixa = 0;
           $timelog->save();
-          
+
           $data = date('d/m/y', strtotime($request->get('data')));
-          
+
           return redirect()->back()->with('status', $worker->nom.', has registrat la teva SORTIDA el '.
                                           $data.' a les: '.$request->get('hora'));
-          
+
       } elseif (($worker != null) && ($request->get('inout') == 1)) {
-          
-        
+
+
           $timelog = new Timelog(array(
             'data' => $request->get('data'),
             'dni' => $request->get('dni'),
@@ -358,43 +358,43 @@ class TimelogsController extends Controller
             'vacances' => 0,
             'baixa' => 0,
           ));
-        
+
           $timelog->save();
-          
+
           $data = date('d/m/y', strtotime($request->get('data')));
-          
+
           return redirect()->back()->with('status', $worker->nom.', has registrat la teva ENTRADA el '.$data.' a les: '.$request->get('hora'));
-          
+
       } else {
-          
+
           return redirect()->back()->with('danger', 'DNI incorrecte / No has fitxat al entrar');
-          
+
       }
   }
 
-    
-    
-    
+
+
+
   /**
     * Consulta horas treballades per treballador entre dues dates donades
     *
     * @return view with a list and sum of worked hours
   **/
   public function setConsultaTreballadorDies() {
-      
+
       $workers = Worker::where('equip', '<>', '0')->orderBy('nom')->get();
-      
+
       return view('timelogs.conTrebDia', compact('workers'));
   }
 
-    
+
   /**
     * Gets a list of days and sum of hours of a worker
     *
     *
   **/
-  public function getConsultaTreballadorDies(TimelogsConsultaFormRequest $request) { 
-      
+  public function getConsultaTreballadorDies(TimelogsConsultaFormRequest $request) {
+
       $timelogs = Timelog::where([
           ['dni', '=', $request->get('dni')],
           ['data', '>=', date('Y-m-d', strtotime($request->get('datainici')))],
@@ -403,20 +403,20 @@ class TimelogsController extends Controller
           ->orderBy('data')->get();
 
       $workers = Worker::where('equip', '<>', '0')->orderBy('nom')->get();
-      
+
       foreach ($workers as $worker) {
-          
+
           if ($worker->dni == $request->get('dni')) {
-              
+
               $info = $worker->dni.' -- '.$worker->nom.' '.$worker->cognoms;
-              
+
           }
       }
-      
+
       return view('timelogs.conTrebDia')->with(compact('timelogs', 'workers', 'info'));
   }
 
- 
+
 
   /**
     * Consulta horari de treball per equip i dia
@@ -424,36 +424,39 @@ class TimelogsController extends Controller
     * @return a list of timetable daily
   **/
   public function setConsultaEquipDia() {
-      
+
       $teams = Team::orderBy('nom')->get();
-      
+
+
+
       return view('timelogs.conEquipDia', compact('teams'));
+
   }
 
-    
+
   /**
     * Gets a list of days and sum of hours of a worker
     *
     *
   **/
-  public function getConsultaequipDia(TimelogsConsultaFormRequest $request) {               
-    
+  public function getConsultaequipDia(TimelogsConsultaFormRequest $request) {
+
       $teams = Team::orderBy('id')->get();
-    
+
       $data = $request->get('data');
-      
+
       foreach ($teams as $team) {
-          
+
           if ($team->id == $request->get('id')) {
-              
+
               $nom = $team->nom.' - '.date('d/m/y', strtotime( $request->get('data')));
-              
+
               $equip = $team->id;
-              
+
           }
-          
+
       }
-      
+
       $workers = Worker::where('equip', $request->get('id'))->get();
 
       $timelogs = Timelog::join('workers', 'timelogs.dni', '=', 'workers.dni')
@@ -461,25 +464,23 @@ class TimelogsController extends Controller
           ->where('timelogs.data', $request->get('data'))
           ->select('timelogs.*', 'workers.*', 'timelogs.id as idtimelogs')
           ->get();
-      
+
       $mescla = $workers->except($timelogs->modelKeys('dni'));
-      
+
       $hores = $timelogs->merge($mescla);
-    
-      return view('timelogs.conEquipDia')->with(compact('teams', 'nom', 'data', 'hores'));
-      
-  }    
-    
-    
-    
+
+      return view('timelogs.conEquipDia')->with(compact('teams', 'nom', 'data', 'hores', 'equip'));
+
+  }
+
+
+
   /**
   * Save input data form
   *
   **/
   public function create(TimelogsFormRequest $request) {
-      
-      vardump($request);
-      
+
       $timelog = new Timelog(array(
           'data' => $request->get('data'),
           'dni' => $request->get('dni'),
@@ -491,30 +492,60 @@ class TimelogsController extends Controller
           'permis' => $request->get('permis'),
           'observacions' => $request->get('observacions'),
       ));
-      
+
       $timelog->save();
-    
-      return redirect()->back()-> with ('status', 'Els registres s\'han afegit!')->withInput();
-  
+/**
+      $teams = Team::orderBy('id')->get();
+
+      $data = $request->get('data');
+
+      foreach ($teams as $team) {
+
+          if ($team->id == $request->get('equip')) {
+
+              $nom = $team->nom.' - '.date('d/m/y', strtotime( $request->get('data')));
+
+              $equip = $team->id;
+
+          }
+
+      }
+
+      $workers = Worker::where('equip', $request->get('id'))->get();
+
+      $timelogs = Timelog::join('workers', 'timelogs.dni', '=', 'workers.dni')
+          ->where('workers.equip', $equip)
+          ->where('timelogs.data', $request->get('data'))
+          ->select('timelogs.*', 'workers.*', 'timelogs.id as idtimelogs')
+          ->get();
+
+      $mescla = $workers->except($timelogs->modelKeys('dni'));
+
+      $hores = $timelogs->merge($mescla);
+
+      return view('timelogs.conEquipDia')->with(compact('teams', 'nom', 'data', 'hores', 'equip'), 'status', 'Els registres s\'han afegit');
+      **/
+      return back()-> with ('status', 'Els registres s\'han afegit!')->withInput();
+
   }
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
   /**
     * Delete a registrer ID
     *
   **/
   public function destroy($id) {
-      
+
       $timelog = Timelog::whereId($id)->firstOrFail();
-      
+
       $timelog-> delete();
-      
+
       return redirect()->back()->with ('status', 'El registre '.$id.' ha estat esborrat!');
-      
+
   }
 }

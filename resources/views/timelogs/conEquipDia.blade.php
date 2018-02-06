@@ -38,7 +38,7 @@
                 </fieldset>
             </form>
         </div>
-        
+
         @if ( empty($hores))
             <div class ="well well bs-component">
                 No hi ha registres per mostrar
@@ -64,7 +64,7 @@
                 <tbody class="text-center">
                     @foreach($hores as $hora)
                        <tr>
-                       @if (!empty($hora->entrada || $hora->sortida || $hora->festa || $hora->vacances || $hora->baixa)) 
+                       @if (!empty($hora->entrada || $hora->sortida || $hora->festa || $hora->vacances || $hora->baixa || $hora->permis))
                           <td>{!! $hora->nom.' '.$hora->cognoms !!}</td>
                           <td>{!! $hora->entrada !!}</td>
                           <td>{!! $hora->sortida !!}</td>
@@ -73,12 +73,13 @@
                           <td>{!! $hora->baixa !!}</td>
                           <td>{!! $hora->permis !!}</td>
                           <td>{!! $hora->observacions !!}</td>
+                          
                           <td><a href="/timelogs/{!! $hora->idtimelogs !!}/edit" target="_blank">
                             <i class="glyphicon glyphicon-pencil"></i></a></td>
                            <td><a href="/timelogs/{!! $hora->idtimelogs !!}/delete" target="_blank">
                             <i class="glyphicon glyphicon-trash"></i></a></td>
                        @else
-                           <form class ="form-horizontal" method="get">
+                           <form class ="form-horizontal" method="post" action="/timelogs/consulta/equipdia/insert">
                                @foreach ($errors->all() as $error)
                                     <p class ="alert alert-danger">{{ $error }}</p>
                                 @endforeach
@@ -90,6 +91,7 @@
                                 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                                 <input type="hidden" class ="form-control" id ="dni" value="{!! $hora->dni !!}" name="dni">
                                 <input type="hidden" class ="form-control" id ="data" value="{!! $data !!}" name="data">
+                                <input type="hidden" class ="form-control" id ="equip" value="{!! $team !!}" name="equip">
                                <td>{!! $hora->nom.' '.$hora->cognoms !!}</td>
                                <td>
                                    <input type="time" class ="" id ="entrada" name="entrada">
@@ -114,15 +116,15 @@
                                    <input type="checkbox" class ="" id ="permis" name="permis" value="1">
                                </td>
                                <td>
-                                   <input type="text" class ="input-sm" id ="observacions" name="observacions">
+                                   <input type="text" class ="" id ="observacions" name="observacions">
+                               </td>
+                               <td>
+                                   <button type="submit" class ="btn btn-primary">
+                                       <i class="glyphicon glyphicon-plus"></i>
+                                   </button>
                                </td>
                                <td>&nbsp;</td>
-                           </form>
-                           <td>
-                               <button type="submit" class ="btn btn-primary">
-                                   <i class="glyphicon glyphicon-plus"></i>
-                               </button>
-                           </td>
+                          </form>
                        @endif
                         </tr>
                     @endforeach
@@ -130,6 +132,5 @@
               </table>
             </div>
         @endif
-        {!! dump($hores) !!}
     </div>
 @endsection

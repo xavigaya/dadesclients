@@ -62,9 +62,12 @@ Route::get('/timelogs/logging/create', 'TimelogsController@create');
 Route::get('/timelogs/consulta/treballadordia', 'TimelogsController@setConsultaTreballadorDies');
 Route::post('/timelogs/consulta/treballadordia', 'TimelogsController@getConsultaTreballadorDies');
 
+
+
 //Consultes dels registres d'horaris per Equip i dia
 Route::get('/timelogs/consulta/equipdia', 'TimelogsController@setConsultaEquipDia');
 Route::post('/timelogs/consulta/equipdia', 'TimelogsController@getConsultaEquipDia');
+Route::post('/timelogs/consulta/equipdia/insert', 'TimelogsController@create');
 
 
 
