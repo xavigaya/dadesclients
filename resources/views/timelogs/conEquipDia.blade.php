@@ -73,20 +73,12 @@
                           <td>{!! $hora->baixa !!}</td>
                           <td>{!! $hora->permis !!}</td>
                           <td>{!! $hora->observacions !!}</td>
-<<<<<<< HEAD
-                          
-=======
->>>>>>> 158a2bbbfce36be4bdb9c5ac23694f8caf94bc2e
                           <td><a href="/timelogs/{!! $hora->idtimelogs !!}/edit" target="_blank">
                             <i class="glyphicon glyphicon-pencil"></i></a></td>
                            <td><a href="/timelogs/{!! $hora->idtimelogs !!}/delete" target="_blank">
                             <i class="glyphicon glyphicon-trash"></i></a></td>
                        @else
-<<<<<<< HEAD
                            <form class ="form-horizontal" method="post" action="/timelogs/consulta/equipdia/insert">
-=======
-                           <form class ="form-horizontal" method="get">
->>>>>>> 158a2bbbfce36be4bdb9c5ac23694f8caf94bc2e
                                @foreach ($errors->all() as $error)
                                     <p class ="alert alert-danger">{{ $error }}</p>
                                 @endforeach
@@ -139,6 +131,5 @@
               </table>
             </div>
         @endif
-        {!! dump($hores) !!}
     </div>
 @endsection

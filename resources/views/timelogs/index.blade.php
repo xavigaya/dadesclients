@@ -6,7 +6,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h2>Registres
-            
+
           </h2>
         </div>
         @if (session('status'))
@@ -29,6 +29,7 @@
                 <th class="col-md-1">Festa</th>
                 <th class="col-md-1">Vacances</th>
                 <th class="col-md-1">Baixa</th>
+                <th class="col-md-1">Permís</th>
                 <th class="col-md-1">Observacions</th>
                 <th class="col-md-1">Editar</th>
                 <th class="col-md-1">Borrar</th>
@@ -64,6 +65,9 @@
                       </td>
                       <td>
                         {!! $timelog->baixa !!}
+                      </td>
+                      <td>
+                        {!! $timelog->permis !!}
                       </td>
                       <td>
                         {!! $timelog->observacions !!}
