@@ -12,7 +12,7 @@ use App\Team;
 class WorkersController extends Controller
 {
   public function index(){
-      $workers = Worker::all();
+      $workers = Worker::where('equip', '>', '0')->orderBy('cognoms')->get();
       return view('workers.index', compact('workers'));
   }
 

@@ -73,7 +73,6 @@
                           <td>{!! $hora->baixa !!}</td>
                           <td>{!! $hora->permis !!}</td>
                           <td>{!! $hora->observacions !!}</td>
-                          
                           <td><a href="/timelogs/{!! $hora->idtimelogs !!}/edit" target="_blank">
                             <i class="glyphicon glyphicon-pencil"></i></a></td>
                            <td><a href="/timelogs/{!! $hora->idtimelogs !!}/delete" target="_blank">

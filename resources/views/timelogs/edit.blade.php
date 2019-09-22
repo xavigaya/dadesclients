@@ -31,81 +31,95 @@
                           <th class="col-md-1">Festa</th>
                           <th class="col-md-1">Vacances</th>
                           <th class="col-md-1">Baixa</th>
+                          <th class="col-md-1">Permis</th>
                           <th class="col-md-3 text-left">Observacions</th>
                           <th class="col-md-1">Borrar</th>
                       </tr>
                   </thead>
                   <tbody class="text-center">
                     @foreach($timelogs as $timelog)
-                      <input type="hidden" class ="form-control" id ="id"
+                      <input type="hidden" class ="" id ="id"
                         value="{!! $timelog->id !!}" name="id">
                       <tr >
                           <td class="col-md-2">
-                            <input type="date" class="form-control" id ="data"
+                            <input type="date" class="" id ="data"
                             value="{!! $timelog->data !!}" name="data"  readonly>
                           </td>
                           <td class="col-md-2">
-                            <input type="text" class ="form-control" id ="dni"
+                            <input type="text" class ="" id ="dni"
                             value="{!! $timelog->dni !!}" readonly name="dni" >
                           </td>
                           <td class="col-md-3 text-left">
                             @foreach($workers as $worker)
                               @if($worker->dni == $timelog->dni)
-                                <input type="text" class ="form-control" id ="nom"
+                                <input type="text" class ="" id ="nom"
                                 value="{!! $worker->nom.' '.$worker->cognoms !!}" readonly
                                 name="nom" >
                               @endif
                             @endforeach
                           </td>
                           <td class="col-md-1">
-                            <input type="text" class ="form-control" id ="entrada"
+                            <input type="text" class ="" id ="entrada"
                             value="{!! $timelog->entrada !!}" name="entrada">
                           </td>
                           <td class="col-md-1">
-                            <input type="text" class ="form-control" id ="sortida"
+                            <input type="text" class ="" id ="sortida"
                             value="{!! $timelog->sortida !!}" name="sortida">
                           </td>
                           <td class="col-md-1">
                             @if($timelog->festa == 1)
-                              <input type="hidden" class ="form-control" id ="festa"
+                              <input type="hidden" class ="" id ="festa"
                                 name="festa" value="0">
-                              <input type="checkbox" class ="form-control" id ="festa"
+                              <input type="checkbox" class ="" id ="festa"
                                 name="festa" value="1" checked>
                             @else
-                              <input type="hidden" class ="form-control" id ="festa"
+                              <input type="hidden" class ="" id ="festa"
                                 name="festa" value="0">
-                              <input type="checkbox" class ="form-control" id ="festa"
+                              <input type="checkbox" class ="" id ="festa"
                                 name="festa" value="1">
                             @endif
                           </td>
                           <td class="col-md-1">
                             @if($timelog->vacances == 1)
-                              <input type="hidden" class ="form-control" id ="vacances"
+                              <input type="hidden" class ="" id ="vacances"
                                 name="vacances" value="0">
-                              <input type="checkbox" class ="form-control" id ="vacances"
+                              <input type="checkbox" class ="" id ="vacances"
                                 name="vacances" value="1" checked>
                             @else
-                              <input type="hidden" class ="form-control" id ="vacances"
+                              <input type="hidden" class ="" id ="vacances"
                                 name="vacances" value="0">
-                              <input type="checkbox" class ="form-control" id ="vacances"
+                              <input type="checkbox" class ="" id ="vacances"
                                 name="vacances" value="1">
                             @endif
                           </td>
                           <td class="col-md-1">
                             @if($timelog->baixa == 1)
-                              <input type="hidden" class ="form-control" id ="baixa"
+                              <input type="hidden" class ="" id ="baixa"
                                 name="baixa" value="0">
-                              <input type="checkbox" class ="form-control" id ="baixa"
+                              <input type="checkbox" class ="" id ="baixa"
                                 name="baixa" value="1" checked>
                             @else
-                              <input type="hidden" class ="form-control" id ="baixa"
+                              <input type="hidden" class ="" id ="baixa"
                                 name="baixa" value="0">
-                              <input type="checkbox" class ="form-control" id ="baixa"
+                              <input type="checkbox" class ="" id ="baixa"
                                 name="baixa" value="1">
                             @endif
                           </td>
+                          <td class="col-md-1">
+                            @if($timelog->permis == 1)
+                              <input type="hidden" class ="" id ="permis"
+                                name="permis" value="0">
+                              <input type="checkbox" class ="" id ="permis"
+                                name="permis" value="1" checked>
+                            @else
+                              <input type="hidden" class ="" id ="permis"
+                                name="permis" value="0">
+                              <input type="checkbox" class ="" id ="permis"
+                                name="permis" value="1">
+                            @endif
+                          </td>
                           <td class="col-md-3">
-                            <input type="text" class ="form-control" id ="observacions"
+                            <input type="text" class ="" id ="observacions"
                             value="{!! $timelog->observacions !!}" name="observacions">
                           </td>
                           <td class="col-md-1">
